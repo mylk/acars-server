@@ -3,8 +3,10 @@
 *.directory
 *.pyc
 *.swp
-bottleplate/log/*
-!bottleplate/log/.gitkeep
+acarsserver/log/*
+acarsserver/app/assets/aircrafts/*
+!acarsserver/log/.gitkeep
+!acarsserver/app/assets/aircrafts/.gitkeep
 
 # files
 alembic.ini

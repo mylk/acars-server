@@ -1,7 +1,9 @@
-#! /usr/bin/python
+#!/usr/bin/python
 
 import socket
 import sys
+
+from acarsserver.model.message import Message
 
 HOST = '' # all available interfaces
 PORT = 5555
@@ -30,7 +32,9 @@ while True:
         data = request[0]
         address = request[1]
 
-        print('Message from client {}:{}\n{}'.format(address[0], str(address[1]), data.decode('utf-8')))
+        msg = Message.create(data)
+
+        print('Message from client {}:{}\n{}\n'.format(address[0], str(address[1]), str(msg)))
     except (KeyboardInterrupt, SystemExit):
         print('Exiting gracefully.')
         break
