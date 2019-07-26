@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="10">
     <title>ACARS server</title>
     <link href="/css/application.css" rel="stylesheet" type="text/css">
 </head>
@@ -10,12 +11,32 @@
 <body>
     <div id="wrap">
     
-% include('layouts/header.tpl', title='HomePage')
+    % include('layouts/header.tpl', title='HomePage')
 
-<h3>Welcome</h3>
-<p>This is a sample home page.</p>
+    <p>These aircrafts just passed above my head (Palaio Faliro, Athens, Greece):</p>
 
-% include('layouts/footer.tpl')
+    <table>
+        <tr>
+            <th>Aircraft Reg.</th>
+            <th>Flight No.</th>
+            <th>Received At</th>
+            <th>Aircraft Image</th>
+        </tr>
+    % for msg in messages:
+        <tr>
+            <td>{{ msg.aircraft }}</td>
+            <td>{{ msg.flight }}</td>
+            <td>{{ msg.received_at }}</td>
+            <td>
+                <a href="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" target="_blank">
+                    <img src="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" height="120" /></li>
+                </a>
+            </td>
+        </tr>
+    % end
+    </table>
+
+    % include('layouts/footer.tpl')
 
     </div>
 </body>

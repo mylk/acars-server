@@ -8,8 +8,8 @@ from acarsserver.app.controllers.application_controller import (
 class AssetsController(ApplicationController):
     """Class for handling static assets."""
 
-    def img(filename):
-        return static_file(filename, root='acarsserver/app/assets/img')
+    def img(path, filename):
+        return static_file(filename, root='acarsserver/app/assets/img/{}'.format(path))
 
     def css(filename):
         return static_file(filename, root='acarsserver/app/assets/css')

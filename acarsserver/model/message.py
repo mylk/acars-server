@@ -12,20 +12,41 @@ class Message:
 
     @staticmethod
     def create(data):
+        msg = None
+        if type(data) == str:
+            msg = Message.create_from_string(data)
+        elif type(data) == tuple:
+            msg = Message.create_from_list(data)
+        else:
+            return None
+
+        if Image.exists(msg.aircraft):
+            print('Aircraft image exists.')
+        else:
+            msg.aircraft_image = Image.get_aircraft_image(msg.aircraft)
+            Image.download_aircraft_image(msg.aircraft_image, msg.aircraft)
+            print('Downloaded aircraft image.')
+
+        return msg
+
+    @staticmethod
+    def create_from_string(data):
         data = data.decode().split(' ')
         received_at_str = '{} {}'.format(data[4], data[5])
 
         msg = Message()
         msg.aircraft = data[9][1:]
         msg.flight = data[13]
-        msg.aircraft_image = Image.get_aircraft_image(msg.aircraft)
         msg.received_at = datetime.strptime(received_at_str, '%d/%m/%Y %H:%M:%S')
 
-        if Image.exists(msg.aircraft):
-            print("Aircraft image exists.")
-        else:
-            Image.download_aircraft_image(msg.aircraft_image, msg.aircraft)
-            print("Downloaded aircraft image.")
+        return msg
+
+    @staticmethod
+    def create_from_list(data):
+        msg = Message()
+        msg.aircraft = data[0]
+        msg.flight = data[1]
+        msg.received_at = datetime.strptime(data[2], '%Y-%m-%d %H:%M:%S')
 
         return msg
 

@@ -19,7 +19,7 @@ class Image:
     @staticmethod
     def exists(aircraft):
         path = os.path.dirname(os.path.realpath(__file__))
-        return os.path.isfile('{}/../app/assets/aircrafts/{}.jpg'.format(path, aircraft.lower()))
+        return os.path.isfile('{}/../app/assets/img/aircrafts/{}.jpg'.format(path, aircraft.lower()))
 
     @staticmethod
     def download_aircraft_image(url, aircraft):
