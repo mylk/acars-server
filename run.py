@@ -1,15 +1,18 @@
+#!/usr/bin/python
+
 import bottle
 from logging import info
 
-from bottleplate import Bottleplate
-from bottleplate.config import (
+from acarsserver import AcarsServer
+from acarsserver.config import (
     environment,
     settings
 )
 
 
 def main():
-    info('bottleplate started')
+    info('ACARS server started.')
+
     db_url = settings.db_url
     server = settings.server
     if not db_url:
@@ -17,22 +20,24 @@ def main():
     if not server:
         server = environment.server
 
-    info('\nApplication settings:\n'
-         'server = %s\n'
-         'host = %s\n'
-         'port = %s\n'
-         'db_url = %s\n'
-         'db_echo = %s\n'
-         'reloader = %s\n'
-         'debug = %s\n',
-         server,
-         settings.host,
-         settings.port,
-         db_url,
-         environment.db_echo,
-         environment.reloader,
-         environment.debug)
-    a = Bottleplate(
+    info(
+        '\nApplication settings:\n'
+        'server = %s\n'
+        'host = %s\n'
+        'port = %s\n'
+        'db_url = %s\n'
+        'db_echo = %s\n'
+        'reloader = %s\n'
+        'debug = %s\n',
+        server,
+        settings.host,
+        settings.port,
+        db_url,
+        environment.db_echo,
+        environment.reloader,
+        environment.debug
+    )
+    a = AcarsServer(
         server=server,
         host=settings.host,
         port=settings.port,
@@ -51,5 +56,5 @@ def main():
     )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

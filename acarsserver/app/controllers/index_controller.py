@@ -1,6 +1,6 @@
 from bottle import template
 
-from bottleplate.app.controllers.application_controller import (
+from acarsserver.app.controllers.application_controller import (
     ApplicationController
 )
 

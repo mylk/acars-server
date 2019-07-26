@@ -1,24 +1,23 @@
 import bottle
-from bottle.ext import sqlalchemy
-from sqlalchemy import create_engine
 
-from bottleplate.app.models import Base
-from bottleplate.config import routes
+from acarsserver.config import routes
 
 __version__ = '0.1.0'
 
 
-class Bottleplate:
+class AcarsServer:
 
-    def __init__(self,
-                 server='auto',
-                 host='0.0.0.0',
-                 port=8080,
-                 db_url='sqlite:///:memory:',
-                 db_echo=False,
-                 reloader=False,
-                 debug=False,
-                 template_path='./bottleplate/app/views/'):
+    def __init__(
+        self,
+        server='auto',
+        host='0.0.0.0',
+        port=8080,
+        db_url='sqlite:///:memory:',
+        db_echo=False,
+        reloader=False,
+        debug=False,
+        template_path='./acarsserver/app/views/'
+    ):
         self.server_type = server
         self.host = host
         self.port = port
@@ -37,15 +36,3 @@ class Bottleplate:
             bottle.TEMPLATE_PATH.remove('./views')
 
         bottle.debug(self.debug)
-
-        engine = create_engine(db_url, echo=db_echo)
-
-        sqlalchemy_plugin = sqlalchemy.Plugin(
-            engine,
-            Base.metadata,
-            keyword='db',
-            create=True,
-            commit=True,
-            use_kwargs=False
-        )
-        self.app.install(sqlalchemy_plugin)

@@ -2,8 +2,8 @@ import sys
 
 sys.path = ['../../..'] + sys.path
 
-import bottleplate
+import acarsserver
 
 
 def get_app():
-    return bottleplate.Bottleplate(template_path='../../app/views/').app
+    return acarsserver.AcarsServer(template_path='../../app/views/').app

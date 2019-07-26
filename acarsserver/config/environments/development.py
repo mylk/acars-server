@@ -8,7 +8,7 @@ debug = True
 reloader = True
 
 # database url
-db_url = 'sqlite:///bottleplate/db/dev.db'
+db_url = 'sqlite:///acarsserver/db/db.sqlite3'
 
 # echo database engine messages
 db_echo = True

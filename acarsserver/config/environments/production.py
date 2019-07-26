@@ -8,7 +8,7 @@ debug = False
 reloader = False
 
 # database url
-db_url = 'postgresql://user:pass@localhost/dbname'
+db_url = 'sqlite:///acarsserver/db/db.sqlite3'
 
 # echo database engine messages
 db_echo = False

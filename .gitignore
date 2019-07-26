@@ -1,18 +1,16 @@
-# general patterns
+# generic
 *.cache
 *.directory
 *.pyc
 *.swp
 acarsserver/log/*
-acarsserver/app/assets/aircrafts/*
+acarsserver/app/assets/img/aircrafts/*
 !acarsserver/log/.gitkeep
-!acarsserver/app/assets/aircrafts/.gitkeep
+!acarsserver/app/assets/img/aircrafts/.gitkeep
 
 # files
-alembic.ini
-bottleplate/config/settings.py
-bottleplate/db/dev.db
-bottleplate/db/bottleplate.db
+acarsserver/config/settings.py
+acarsserver/db/db.sqlite3
 .project
 .pydevproject
 
