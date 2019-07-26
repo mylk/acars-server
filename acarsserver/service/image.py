@@ -24,6 +24,6 @@ class Image:
     @staticmethod
     def download_aircraft_image(url, aircraft):
         path = os.path.dirname(os.path.realpath(__file__))
-        filename = '{}/../app/assets/aircrafts/{}.{}'.format(path, aircraft.lower(), url.split('.')[-1:][0])
+        filename = '{}/../app/assets/img/aircrafts/{}.{}'.format(path, aircraft.lower(), url.split('.')[-1:][0])
 
         request.urlretrieve(url, filename)
