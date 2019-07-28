@@ -3,8 +3,8 @@
 import socket
 import sys
 
-from acarsserver.model.message import Message
 from acarsserver.mapper.message import MessageMapper
+from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
 PORT = 5555
@@ -33,7 +33,7 @@ while True:
         data = request[0]
         address = request[1]
 
-        msg = Message.create(data)
+        msg = MessageService.map(data)
 
         MessageMapper().insert(msg)
 

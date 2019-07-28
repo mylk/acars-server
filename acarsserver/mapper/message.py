@@ -2,7 +2,7 @@ from datetime import datetime
 
 from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.model.message import Message
-from acarsserver.service.image import Image
+from acarsserver.service.image import ImageService
 
 
 class MessageMapper:
@@ -44,10 +44,10 @@ class MessageMapper:
             msg.received_at = datetime.strptime(result[2], '%Y-%m-%d %H:%M:%S')
 
             # fetch the aircraft image if missing
-            if not Image.exists(msg.aircraft):
+            if not ImageService.exists(msg.aircraft):
                 print('Downloading {} aircraft image.'.format(msg.aircraft))
-                msg.aircraft_image = Image.get_aircraft_image(msg.aircraft)
-                Image.download_aircraft_image(msg.aircraft_image, msg.aircraft)
+                msg.aircraft_image = ImageService.get_aircraft_image(msg.aircraft)
+                ImageService.download_aircraft_image(msg.aircraft_image, msg.aircraft)
                 print('Aircraft image downloaded.')
 
             messages.append(msg)
