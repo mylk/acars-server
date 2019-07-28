@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-import os
 import socket
-import sqlite3
 import sys
 
 from acarsserver.model.message import Message
+from acarsserver.mapper.message import MessageMapper
 
 HOST = '' # all available interfaces
 PORT = 5555
@@ -36,12 +35,7 @@ while True:
 
         msg = Message.create(data)
 
-        path = '{}/../db/db.sqlite3'.format(os.path.dirname(os.path.realpath(__file__)))
-        conn = sqlite3.connect(path)
-        c = conn.cursor()
-        c.execute('INSERT INTO messages (aircraft, flight, received_at) VALUES (?, ?, ?)', (msg.aircraft, msg.flight, msg.received_at))
-        conn.commit()
-        conn.close()
+        MessageMapper().insert(msg)
 
         print('Message from client {}:{}\n{}\n'.format(address[0], str(address[1]), str(msg)))
     except (KeyboardInterrupt, SystemExit):

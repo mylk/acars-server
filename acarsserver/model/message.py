@@ -13,19 +13,16 @@ class Message:
     @staticmethod
     def create(data):
         msg = None
-        if type(data) == str:
+        if type(data) == str or type(data) == bytes:
             msg = Message.create_from_string(data)
-        elif type(data) == tuple:
-            msg = Message.create_from_list(data)
         else:
             return None
 
-        if Image.exists(msg.aircraft):
-            print('Aircraft image exists.')
-        else:
+        if not Image.exists(msg.aircraft):
+            print('Downloading {} aircraft image.'.format(msg.aircraft))
             msg.aircraft_image = Image.get_aircraft_image(msg.aircraft)
             Image.download_aircraft_image(msg.aircraft_image, msg.aircraft)
-            print('Downloaded aircraft image.')
+            print('Aircraft image downloaded.')
 
         return msg
 
@@ -38,15 +35,6 @@ class Message:
         msg.aircraft = data[9][1:]
         msg.flight = data[13]
         msg.received_at = datetime.strptime(received_at_str, '%d/%m/%Y %H:%M:%S')
-
-        return msg
-
-    @staticmethod
-    def create_from_list(data):
-        msg = Message()
-        msg.aircraft = data[0]
-        msg.flight = data[1]
-        msg.received_at = datetime.strptime(data[2], '%Y-%m-%d %H:%M:%S')
 
         return msg
 
