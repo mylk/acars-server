@@ -9,7 +9,6 @@ acarsserver/app/assets/img/aircrafts/*
 !acarsserver/app/assets/img/aircrafts/.gitkeep
 
 # files
-acarsserver/config/settings.py
 acarsserver/db/db.sqlite3
 .project
 .pydevproject
