@@ -1,8 +1,6 @@
 from bottle import static_file
 
-from acarsserver.app.controllers.application_controller import (
-    ApplicationController
-)
+from acarsserver.app.controllers.application_controller import ApplicationController
 
 
 class AssetsController(ApplicationController):

@@ -2,11 +2,8 @@ from bottle import template
 import os
 import sqlite3
 
+from acarsserver.app.controllers.application_controller import ApplicationController
 from acarsserver.mapper.message import MessageMapper
-
-from acarsserver.app.controllers.application_controller import (
-    ApplicationController
-)
 
 
 class IndexController(ApplicationController):
