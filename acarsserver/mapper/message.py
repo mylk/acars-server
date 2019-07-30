@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.model.message import Message
 from acarsserver.mapper.client import ClientMapper
 from acarsserver.service.image import ImageService
@@ -10,8 +9,8 @@ class MessageMapper:
 
     adapter = None
 
-    def __init__(self):
-        self.adapter = SqliteAdapter.get_instance()
+    def __init__(self, adapter):
+        self.adapter = adapter
 
     def insert(self, msg, client):
         self.adapter.execute(
@@ -19,7 +18,6 @@ class MessageMapper:
             (msg.aircraft, msg.flight, msg.first_seen, msg.last_seen, client.id)
         )
         self.adapter.connection.commit()
-        self.adapter.connection.close()
 
     def fetch_all(self, order=None, limit=None):
         # default order and limit, if not set
@@ -36,8 +34,6 @@ class MessageMapper:
         )
         results = self.adapter.fetchall()
 
-        self.adapter.connection.close()
-
         # map to models
         messages = []
         for result in results:
@@ -47,7 +43,7 @@ class MessageMapper:
             msg.flight = result[2]
             msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-            msg.client = ClientMapper().fetch(result[5])
+            msg.client = ClientMapper(self.adapter).fetch(result[5])
 
             # fetch the aircraft image if missing
             if not ImageService.exists(msg.aircraft):

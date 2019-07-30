@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.mapper.client import ClientMapper
 from acarsserver.model.message import Message
 
@@ -9,8 +8,8 @@ class MessageRepository():
 
     adapter = None
 
-    def __init__(self):
-        self.adapter = SqliteAdapter.get_instance()
+    def __init__(self, adapter):
+        self.adapter = adapter
 
     def fetch_identical(self, msg):
         self.adapter.execute(
@@ -23,8 +22,6 @@ class MessageRepository():
         )
         result = self.adapter.fetchone()
 
-        self.adapter.connection.close()
-
         msg = None
         if result:
             # @TODO: duplicate code
@@ -34,7 +31,7 @@ class MessageRepository():
             msg.flight = result[2]
             msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-            msg.client = ClientMapper().fetch(result[5])
+            msg.client = ClientMapper(self.adapter).fetch(result[5])
 
         return msg
 
@@ -46,4 +43,3 @@ class MessageRepository():
             (now, client.id, msg.id)
         )
         self.adapter.connection.commit()
-        self.adapter.connection.close()

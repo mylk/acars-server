@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.model.client import Client
 
 
@@ -8,13 +7,12 @@ class ClientRepository():
 
     adapter = None
 
-    def __init__(self):
-        self.adapter = SqliteAdapter.get_instance()
+    def __init__(self, adapter):
+        self.adapter = adapter
 
     def fetch_identical(self, client):
         self.adapter.execute('SELECT id, ip, last_seen FROM clients WHERE ip = ?', (client.ip,))
         result = self.adapter.fetchone()
-        self.adapter.connection.close()
 
         client = None
         if result:
@@ -34,4 +32,3 @@ class ClientRepository():
         )
 
         self.adapter.connection.commit()
-        self.adapter.connection.close()
