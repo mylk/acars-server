@@ -7,17 +7,9 @@ __version__ = '0.2.0'
 
 class AcarsServer:
 
-    def __init__(
-        self,
-        server='auto',
-        host='0.0.0.0',
-        port=8080,
-        db_url='sqlite:///:memory:',
-        db_echo=False,
-        reloader=False,
-        debug=False,
-        template_path='./acarsserver/app/views/'
-    ):
+    template_path = './acarsserver/app/views/'
+
+    def __init__(self, server, host, port, db_url, db_echo, reloader, debug):
         self.server_type = server
         self.host = host
         self.port = port
@@ -28,8 +20,8 @@ class AcarsServer:
 
         routes.setup_routing(self.app)
 
-        if template_path not in bottle.TEMPLATE_PATH:
-            bottle.TEMPLATE_PATH.append(template_path)
+        if self.template_path not in bottle.TEMPLATE_PATH:
+            bottle.TEMPLATE_PATH.append(self.template_path)
         if './' in bottle.TEMPLATE_PATH:
             bottle.TEMPLATE_PATH.remove('./')
         if './views' in bottle.TEMPLATE_PATH:

@@ -3,11 +3,12 @@
 import socket
 import sys
 
+from acarsserver.config import environment
 from acarsserver.mapper.message import MessageMapper
 from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
-PORT = 5555
+PORT = environment.listener_port
 
 # create udp socket
 try:

@@ -23,8 +23,8 @@ def main():
         'reloader = %s\n'
         'debug = %s\n',
         environment.server,
-        settings.host,
-        settings.port,
+        settings.web_host,
+        settings.web_port,
         environment.db_url,
         environment.db_echo,
         environment.reloader,
@@ -33,8 +33,8 @@ def main():
 
     acarsserver = AcarsServer(
         server=environment.server,
-        host=settings.host,
-        port=settings.port,
+        host=settings.web_host,
+        port=settings.web_port,
         db_url=environment.db_url,
         db_echo=environment.db_echo,
         reloader=environment.reloader,
