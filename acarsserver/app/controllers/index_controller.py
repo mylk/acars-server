@@ -12,6 +12,6 @@ class IndexController(ApplicationController):
     def index(self):
         """Render index page."""
 
-        messages = MessageMapper().fetch_all(('received_at', 'DESC'), 10)
+        messages = MessageMapper().fetch_all(('last_seen', 'DESC'), 10)
 
         return template('index.tpl', messages=messages)

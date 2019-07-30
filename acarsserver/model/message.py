@@ -3,15 +3,19 @@ from datetime import datetime
 
 class Message:
 
+    id = None
     aircraft = None
     aircraft_image = None
     flight = None
-    received_at = None
+    first_seen = None
+    last_seen = None
 
     def __str__(self):
-        return 'Aircraft: {}, Flight: {}, Received At:{}, Aircraft Image:{}'.format(
+        return 'ID: {}, Aircraft: {}, Flight: {}, First Seen:{}, Last Seen:{}, Aircraft Image:{}'.format(
+            self.id,
             self.aircraft,
             self.flight,
-            self.received_at.strftime('%Y-%m-%d %H:%M:%S'),
+            self.first_seen.strftime('%Y-%m-%d %H:%M:%S'),
+            self.last_seen.strftime('%Y-%m-%d %H:%M:%S'),
             self.aircraft_image
         )

@@ -5,6 +5,7 @@ import sys
 
 from acarsserver.config import environment
 from acarsserver.mapper.message import MessageMapper
+from acarsserver.repository.message import MessageRepository
 from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
@@ -36,7 +37,11 @@ while True:
 
         msg = MessageService.map(data)
 
-        MessageMapper().insert(msg)
+        identical = MessageRepository().fetch_identical(msg)
+        if identical:
+            MessageRepository().update_last_seen(identical)
+        else:
+            MessageMapper().insert(msg)
 
         print('Message from client {}:{}\n{}\n'.format(address[0], str(address[1]), str(msg)))
     except (KeyboardInterrupt, SystemExit):

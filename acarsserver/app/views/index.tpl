@@ -19,14 +19,16 @@
         <tr>
             <th>Aircraft Reg.</th>
             <th>Flight No.</th>
-            <th>Received At</th>
+            <th>First Seen</th>
+            <th>Last Seen</th>
             <th>Aircraft Image</th>
         </tr>
     % for msg in messages:
         <tr>
             <td>{{ msg.aircraft }}</td>
             <td>{{ msg.flight }}</td>
-            <td>{{ msg.received_at }}</td>
+            <td>{{ msg.first_seen }}</td>
+            <td>{{ msg.last_seen }}</td>
             <td>
                 <a href="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" target="_blank">
                     <img src="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" height="120" /></li>
