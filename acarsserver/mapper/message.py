@@ -2,6 +2,7 @@ from datetime import datetime
 
 from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.model.message import Message
+from acarsserver.mapper.client import ClientMapper
 from acarsserver.service.image import ImageService
 
 
@@ -12,10 +13,10 @@ class MessageMapper:
     def __init__(self):
         self.adapter = SqliteAdapter.get_instance()
 
-    def insert(self, msg):
+    def insert(self, msg, client):
         self.adapter.execute(
-            'INSERT INTO messages (aircraft, flight, first_seen, last_seen) VALUES (?, ?, ?, ?)',
-            (msg.aircraft, msg.flight, msg.first_seen, msg.last_seen)
+            'INSERT INTO messages (aircraft, flight, first_seen, last_seen, client_id) VALUES (?, ?, ?, ?, ?)',
+            (msg.aircraft, msg.flight, msg.first_seen, msg.last_seen, client.id)
         )
         self.adapter.connection.commit()
         self.adapter.connection.close()
@@ -27,7 +28,7 @@ class MessageMapper:
 
         # the actual query
         self.adapter.execute(
-            'SELECT id, aircraft, flight, first_seen, last_seen FROM messages ORDER BY {} {} LIMIT {}'.format(
+            'SELECT id, aircraft, flight, first_seen, last_seen, client_id FROM messages ORDER BY {} {} LIMIT {}'.format(
                 order[0],
                 order[1],
                 limit
@@ -46,6 +47,7 @@ class MessageMapper:
             msg.flight = result[2]
             msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
+            msg.client = ClientMapper().fetch(result[5])
 
             # fetch the aircraft image if missing
             if not ImageService.exists(msg.aircraft):

@@ -4,8 +4,11 @@ import socket
 import sys
 
 from acarsserver.config import environment
+from acarsserver.mapper.client import ClientMapper
 from acarsserver.mapper.message import MessageMapper
+from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
+from acarsserver.service.client import ClientService
 from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
@@ -33,17 +36,30 @@ while True:
         # receive data from client
         request = sock.recvfrom(1024)
         data = request[0]
-        address = request[1]
+        ip = request[1][0]
+        port = request[1][1]
+
+        client = ClientService.map(ip)
+        identical = ClientRepository().fetch_identical(client)
+        if identical:
+            # @TODO move to mapper?
+            ClientRepository().update(identical)
+            client = identical
+        else:
+            ClientMapper().insert(client)
+            client = ClientRepository().fetch_identical(client)
 
         msg = MessageService.map(data)
-
         identical = MessageRepository().fetch_identical(msg)
         if identical:
-            MessageRepository().update_last_seen(identical)
+            # @TODO move to mapper?
+            MessageRepository().update(identical, client)
+            msg = identical
         else:
-            MessageMapper().insert(msg)
+            MessageMapper().insert(msg, client)
+            msg = MessageRepository().fetch_identical(msg)
 
-        print('Message from client {}:{}\n{}\n'.format(address[0], str(address[1]), str(msg)))
+        print('Message from client {}:{}\n{}\n'.format(ip, port, str(msg)))
     except (KeyboardInterrupt, SystemExit):
         print('Exiting gracefully.')
         break
