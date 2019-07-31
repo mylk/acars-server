@@ -20,6 +20,7 @@ class ClientRepository():
             client.id = result[0]
             client.ip = result[1]
             client.last_seen = datetime.strptime(result[2], '%Y-%m-%d %H:%M:%S')
+            client.is_online = True if ((datetime.now() - client.last_seen).seconds / 60) <= 30 else False
 
         return client
 

@@ -4,7 +4,7 @@ A python3 implementation of an ACARS server, storing and displaying ACARS messag
 
 ## Demo
 
-This is a real deployment of the application, using actual data as received by my station at home (Palaio Falioro, Athens, Greece).
+This is a real deployment of the application, displaying reatime data as received by my station at home (Palaio Falioro, Athens, Greece).
 
 [TBD](#)
 

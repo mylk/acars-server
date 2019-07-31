@@ -11,9 +11,11 @@
 <body>
     <div id="wrap">
     
-    % include('layouts/header.tpl', title='HomePage')
+    % include('layouts/header.tpl')
 
     <p>These aircrafts just passed above my head (Palaio Faliro, Athens, Greece):</p>
+
+    % include('layouts/is_online.tpl', messages=messages)
 
     <table>
         <tr>

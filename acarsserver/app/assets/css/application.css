@@ -1,3 +1,9 @@
+#is-online {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
 #wrap {
     margin: auto;
     width: 35%;
