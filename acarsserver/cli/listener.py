@@ -39,8 +39,9 @@ while True:
         # receive data from client
         request = sock.recvfrom(1024)
         data = request[0]
-        ip = request[1][0]
-        port = request[1][1]
+        address = request[1]
+        ip = address[0]
+        port = address[1]
 
         client = ClientService.map(ip)
         identical = ClientRepository(adapter).fetch_identical(client)
@@ -52,7 +53,7 @@ while True:
             ClientMapper(adapter).insert(client)
             client = ClientRepository(adapter).fetch_identical(client)
 
-        msg = MessageService.map(data)
+        msg = MessageService.map(data, client)
         identical = MessageRepository(adapter).fetch_identical(msg)
         if identical:
             # @TODO move to mapper?

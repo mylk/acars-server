@@ -7,7 +7,7 @@ from acarsserver.service.image import ImageService
 class MessageService:
 
     @staticmethod
-    def map(data):
+    def map(data, client):
 
         data = data.decode().split(' ')
         last_seen_str = '{} {}'.format(data[4], data[5])
@@ -17,6 +17,7 @@ class MessageService:
         msg.flight = data[13]
         msg.first_seen = datetime.strptime(last_seen_str, '%d/%m/%Y %H:%M:%S')
         msg.last_seen = datetime.strptime(last_seen_str, '%d/%m/%Y %H:%M:%S')
+        msg.client = client
 
         if not ImageService.exists(msg.aircraft):
             print('Downloading {} aircraft image.'.format(msg.aircraft))
