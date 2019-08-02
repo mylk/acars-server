@@ -87,7 +87,7 @@ ENV=production make client
 
 The client assumes that a local instance of `acars-server` run and send the messages there. In case that the listener component is installed on a remote machine, edit the file `acars-server/acarsserver/config/environments/production.py` and change `listener_host` and `listener_port` settings to the values that fit your needs.
 
-By default, the client scans the European ACARS radio frequencies. In case you want to change them, please advice [this document](https://www.acarsd.org/ACARS_frequencies.html) for the appropriate frequencies of your location and then change them in `acars-server/acarsserver/cli/client.py`.
+By default, the client scans the European ACARS radio frequencies. In case you want to change them, please advice [this document](https://www.acarsd.org/ACARS_frequencies.html) for the appropriate frequencies of your location and then change them in `acars-server/acarsserver/config/settings.py`.
 
 Run the listener to receive the messages from the client:
 
