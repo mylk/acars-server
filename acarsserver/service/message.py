@@ -21,7 +21,10 @@ class MessageService:
         if not ImageService.exists(msg.aircraft):
             print('Downloading {} aircraft image.'.format(msg.aircraft))
             msg.aircraft_image = ImageService.get_aircraft_image(msg.aircraft)
-            ImageService.download_aircraft_image(msg.aircraft_image, msg.aircraft)
-            print('Aircraft image downloaded.')
+            if msg.aircraft_image:
+                ImageService.download_aircraft_image(msg.aircraft_image, msg.aircraft)
+                print('Aircraft image downloaded.')
+            else:
+                print('Aircraft image URL could not be fetched.')
 
         return msg

@@ -13,9 +13,12 @@ class ImageService:
         response = request.urlopen(ImageService.MEDIAWIKI_URL.format(aircraft))
 
         data = json.loads(response.read().decode('utf-8'))
-        pages = data['query']['pages']
+        if 'query' in data and 'pages' in data['query']:
+            pages = data['query']['pages']
 
-        return [elem for elem in pages.values()][0]['imageinfo'][0]['url']
+            return [elem for elem in pages.values()][0]['imageinfo'][0]['url']
+
+        return None
 
     @staticmethod
     def exists(aircraft):
