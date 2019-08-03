@@ -24,14 +24,8 @@ class MessageRepository():
 
         msg = None
         if result:
-            # @TODO: duplicate code
-            msg = Message()
-            msg.id = result[0]
-            msg.aircraft = result[1]
-            msg.flight = result[2]
-            msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-            msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-            msg.client = ClientDbMapper(self.adapter).fetch(result[5])
+            client = ClientDbMapper(self.adapter).fetch(result[5])
+            msg = Message(result, client)
 
         return msg
 

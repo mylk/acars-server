@@ -7,9 +7,6 @@ class ClientInputMapper:
 
     @staticmethod
     def map(ip):
-        client = Client()
-        client.ip = ip
-        client.last_seen = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-        client.is_online = True
+        client = Client([None, ip, datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')])
 
         return client
