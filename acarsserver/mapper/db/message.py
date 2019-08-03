@@ -1,11 +1,11 @@
 from datetime import datetime
 
 from acarsserver.model.message import Message
-from acarsserver.mapper.client import ClientMapper
+from acarsserver.mapper.db.client import ClientDbMapper
 from acarsserver.service.image import ImageService
 
 
-class MessageMapper:
+class MessageDbMapper:
 
     adapter = None
 
@@ -43,7 +43,7 @@ class MessageMapper:
             msg.flight = result[2]
             msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-            msg.client = ClientMapper(self.adapter).fetch(result[5])
+            msg.client = ClientDbMapper(self.adapter).fetch(result[5])
 
             messages.append(msg)
 

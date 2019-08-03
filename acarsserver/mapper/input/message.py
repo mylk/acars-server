@@ -4,7 +4,7 @@ from acarsserver.model.message import Message
 from acarsserver.service.image import ImageService
 
 
-class MessageService:
+class MessageInputMapper:
 
     @staticmethod
     def map(data, client):

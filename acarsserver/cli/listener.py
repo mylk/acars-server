@@ -5,13 +5,13 @@ import sys
 
 from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.config import environment
-from acarsserver.mapper.client import ClientMapper
-from acarsserver.mapper.message import MessageMapper
+from acarsserver.mapper.db.client import ClientDbMapper
+from acarsserver.mapper.db.message import MessageDbMapper
+from acarsserver.mapper.input.client import ClientInputMapper
+from acarsserver.mapper.input.message import MessageInputMapper
 from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
-from acarsserver.service.client import ClientService
 from acarsserver.service.image import ImageService
-from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
 PORT = environment.listener_port
@@ -44,24 +44,24 @@ while True:
         ip = address[0]
         port = address[1]
 
-        client = ClientService.map(ip)
+        client = ClientInputMapper.map(ip)
         identical = ClientRepository(adapter).fetch_identical(client)
         if identical:
             # @TODO move to mapper?
             ClientRepository(adapter).update(identical)
             client = identical
         else:
-            ClientMapper(adapter).insert(client)
+            ClientDbMapper(adapter).insert(client)
             client = ClientRepository(adapter).fetch_identical(client)
 
-        msg = MessageService.map(data, client)
+        msg = MessageInputMapper.map(data, client)
         identical = MessageRepository(adapter).fetch_identical(msg)
         if identical:
             # @TODO move to mapper?
             MessageRepository(adapter).update(identical, client)
             msg = identical
         else:
-            MessageMapper(adapter).insert(msg, client)
+            MessageDbMapper(adapter).insert(msg, client)
             msg = MessageRepository(adapter).fetch_identical(msg)
 
         ImageService.handle(msg)

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from acarsserver.mapper.client import ClientMapper
+from acarsserver.mapper.db.client import ClientDbMapper
 from acarsserver.model.message import Message
 
 
@@ -31,7 +31,7 @@ class MessageRepository():
             msg.flight = result[2]
             msg.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-            msg.client = ClientMapper(self.adapter).fetch(result[5])
+            msg.client = ClientDbMapper(self.adapter).fetch(result[5])
 
         return msg
 

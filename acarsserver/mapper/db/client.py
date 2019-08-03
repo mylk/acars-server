@@ -3,7 +3,7 @@ from datetime import datetime
 from acarsserver.model.client import Client
 
 
-class ClientMapper:
+class ClientDbMapper:
 
     adapter = None
 
