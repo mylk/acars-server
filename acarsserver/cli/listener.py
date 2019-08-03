@@ -10,6 +10,7 @@ from acarsserver.mapper.message import MessageMapper
 from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
 from acarsserver.service.client import ClientService
+from acarsserver.service.image import ImageService
 from acarsserver.service.message import MessageService
 
 HOST = '' # all available interfaces
@@ -62,6 +63,8 @@ while True:
         else:
             MessageMapper(adapter).insert(msg, client)
             msg = MessageRepository(adapter).fetch_identical(msg)
+
+        ImageService.handle(msg)
 
         print('Message from client {}:{}\n{}\n'.format(ip, port, str(msg)))
     except (KeyboardInterrupt, SystemExit):

@@ -45,16 +45,6 @@ class MessageMapper:
             msg.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
             msg.client = ClientMapper(self.adapter).fetch(result[5])
 
-            # fetch the aircraft image if missing
-            if not ImageService.exists(msg.aircraft):
-                print('Downloading {} aircraft image.'.format(msg.aircraft))
-                msg.aircraft_image = ImageService.get_aircraft_image(msg.aircraft)
-                if msg.aircraft_image:
-                    ImageService.download_aircraft_image(msg.aircraft_image, msg.aircraft)
-                    print('Aircraft image downloaded.')
-                else:
-                    print('Aircraft image URL could not be fetched.')
-
             messages.append(msg)
 
         return messages

@@ -19,13 +19,4 @@ class MessageService:
         msg.last_seen = datetime.strptime(last_seen_str, '%d/%m/%Y %H:%M:%S')
         msg.client = client
 
-        if not ImageService.exists(msg.aircraft):
-            print('Downloading {} aircraft image.'.format(msg.aircraft))
-            msg.aircraft_image = ImageService.get_aircraft_image(msg.aircraft)
-            if msg.aircraft_image:
-                ImageService.download_aircraft_image(msg.aircraft_image, msg.aircraft)
-                print('Aircraft image downloaded.')
-            else:
-                print('Aircraft image URL could not be fetched.')
-
         return msg

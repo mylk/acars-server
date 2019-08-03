@@ -9,7 +9,24 @@ class ImageService:
         'gcmtitle=Category:{}_(aircraft)&gcmtype=file&redirects=1&prop=imageinfo&iiprop=url&format=json'
 
     @staticmethod
-    def get_aircraft_image(aircraft):
+    def handle(msg):
+        # fetch the aircraft image if missing
+        if not ImageService.exists(msg.aircraft):
+            print('Downloading {} aircraft image.'.format(msg.aircraft))
+            url = ImageService.get_url(msg.aircraft)
+            if url:
+                ImageService.download_image(url, msg.aircraft)
+                print('Aircraft image downloaded.')
+            else:
+                print('Aircraft image URL could not be fetched.')
+
+    @staticmethod
+    def exists(aircraft):
+        path = os.path.dirname(os.path.realpath(__file__))
+        return os.path.isfile('{}/../app/assets/img/aircrafts/{}.jpg'.format(path, aircraft.lower()))
+
+    @staticmethod
+    def get_url(aircraft):
         response = request.urlopen(ImageService.MEDIAWIKI_URL.format(aircraft))
 
         data = json.loads(response.read().decode('utf-8'))
@@ -21,12 +38,7 @@ class ImageService:
         return None
 
     @staticmethod
-    def exists(aircraft):
-        path = os.path.dirname(os.path.realpath(__file__))
-        return os.path.isfile('{}/../app/assets/img/aircrafts/{}.jpg'.format(path, aircraft.lower()))
-
-    @staticmethod
-    def download_aircraft_image(url, aircraft):
+    def download_image(url, aircraft):
         path = os.path.dirname(os.path.realpath(__file__))
         filename = '{}/../app/assets/img/aircrafts/{}.{}'.format(path, aircraft.lower(), url.split('.')[-1:][0])
 
