@@ -17,7 +17,7 @@ class MessageRepository():
             'FROM messages ' +
             'WHERE aircraft = ? ' +
             'AND flight = ? ' +
-            'AND ((strftime("%s", "now", "localtime") - strftime("%s", last_seen)) / 60) <= 30',
+            'AND ((strftime("%s", "now", "localtime") - strftime("%s", last_seen, "localtime")) / 60) <= 30',
             (msg.aircraft, msg.flight)
         )
         result = self.adapter.fetchone()
