@@ -21,6 +21,9 @@ client_fake: clean
 web:
 	./run.py
 
+db_migrate:
+	yoyo apply
+
 clean:
 	find . -name *.pyc -delete
 	find . -name __pycache__ -type d -delete

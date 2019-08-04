@@ -77,6 +77,12 @@ Install python package dependencies:
 make deps
 ```
 
+Create the database:
+
+```
+make db_migrate
+```
+
 ### Running
 
 If you own the required equipment, you can run the client yourself:
