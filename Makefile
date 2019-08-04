@@ -1,7 +1,10 @@
 sys_deps:
-     ifeq (, $(shell which acarsdec 2> /dev/null))
-     $(error Please install acarsdec, first.)
-     endif
+ifeq (, $(shell which acarsdec 2> /dev/null))
+	$(error Please install acarsdec, first.)
+endif
+ifneq (0, $(shell cat /sys/module/usbcore/parameters/usbfs_memory_mb))
+	echo 0 | sudo tee /sys/module/usbcore/parameters/usbfs_memory_mb
+endif
 
 deps:
 	pip install -r requirements.txt
