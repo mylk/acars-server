@@ -5,10 +5,13 @@ import sys
 
 from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.config import environment
+from acarsserver.mapper.db.aircraft import AircraftDbMapper
 from acarsserver.mapper.db.client import ClientDbMapper
 from acarsserver.mapper.db.message import MessageDbMapper
+from acarsserver.mapper.input.aircraft import AircraftInputMapper
 from acarsserver.mapper.input.client import ClientInputMapper
 from acarsserver.mapper.input.message import MessageInputMapper
+from acarsserver.repository.aircraft import AircraftRepository
 from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
 from acarsserver.service.image import ImageService
@@ -39,7 +42,7 @@ while True:
     try:
         # receive data from client
         request = sock.recvfrom(1024)
-        data = request[0]
+        data = request[0].decode().split(' ')
         address = request[1]
         ip = address[0]
         port = address[1]
@@ -54,17 +57,25 @@ while True:
             ClientDbMapper(adapter).insert(client)
             client = ClientRepository(adapter).fetch_identical(client)
 
-        msg = MessageInputMapper.map(data, client)
+        aircraft = AircraftInputMapper.map(data[9].strip('.'))
+        identical = AircraftRepository(adapter).fetch_identical(aircraft)
+        if identical:
+            aircraft = identical
+        else:
+            AircraftDbMapper(adapter).insert(aircraft)
+            aircraft = AircraftRepository(adapter).fetch_identical(aircraft)
+
+        msg = MessageInputMapper.map(data, aircraft, client)
         identical = MessageRepository(adapter).fetch_identical(msg)
         if identical:
             # @TODO move to mapper?
             MessageRepository(adapter).update(identical, client)
             msg = identical
         else:
-            MessageDbMapper(adapter).insert(msg, client)
+            MessageDbMapper(adapter).insert(msg, aircraft, client)
             msg = MessageRepository(adapter).fetch_identical(msg)
 
-        ImageService.handle(msg)
+        ImageService(adapter).handle(aircraft)
 
         print('Message from client {}:{}\n{}\n'.format(ip, port, str(msg)))
     except (KeyboardInterrupt, SystemExit):

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from acarsserver.mapper.db.aircraft import AircraftDbMapper
 from acarsserver.mapper.db.client import ClientDbMapper
 from acarsserver.model.message import Message
 
@@ -11,10 +12,10 @@ class MessageDbMapper:
     def __init__(self, adapter):
         self.adapter = adapter
 
-    def insert(self, msg, client):
+    def insert(self, msg, aircraft, client):
         self.adapter.execute(
-            'INSERT INTO messages (aircraft, flight, first_seen, last_seen, client_id) VALUES (?, ?, ?, ?, ?)',
-            (msg.aircraft, msg.flight, msg.first_seen, msg.last_seen, client.id)
+            'INSERT INTO messages (aircraft_id, flight, first_seen, last_seen, client_id) VALUES (?, ?, ?, ?, ?)',
+            (aircraft.id, msg.flight, msg.first_seen, msg.last_seen, client.id)
         )
         self.adapter.connection.commit()
 
@@ -40,8 +41,9 @@ class MessageDbMapper:
         # map to models
         messages = []
         for result in results:
+            aircraft = AircraftDbMapper(self.adapter).fetch(result[1])
             client = ClientDbMapper(self.adapter).fetch(result[5])
-            msg = Message(result, client)
+            msg = Message(result, aircraft, client)
 
             messages.append(msg)
 

@@ -27,13 +27,13 @@
         </tr>
     % for msg in messages:
         <tr>
-            <td>{{ msg.aircraft }}</td>
+            <td>{{ msg.aircraft.registration }}</td>
             <td>{{ msg.flight }}</td>
             <td>{{ msg.first_seen }}</td>
             <td>{{ msg.last_seen }}</td>
             <td>
-                <a href="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" target="_blank">
-                    <img src="/img/aircrafts/{{ msg.aircraft.lower() }}.jpg" height="120" /></li>
+                <a href="/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
+                    <img src="/img/aircrafts/{{ msg.aircraft.image }}" height="120" /></li>
                 </a>
             </td>
         </tr>
