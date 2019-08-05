@@ -31,7 +31,7 @@ except OSError as msg:
     sys.exit()
 
 while True:
-    now = datetime.now()
+    now = datetime.utcnow()
     current_date = datetime.strftime(now, '%d/%m/%Y')
     current_time = datetime.strftime(now, '%H:%M:%S')
 

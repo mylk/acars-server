@@ -25,7 +25,11 @@ class MessageDbMapper:
 
         # the actual query
         self.adapter.execute(
-            'SELECT id, aircraft, flight, first_seen, last_seen, client_id FROM messages ORDER BY {} {} LIMIT {}'.format(
+            'SELECT id, aircraft_id, flight, strftime("%Y-%m-%d %H:%M:%S", "first_seen", "localtime"), ' + \
+            'strftime("%Y-%m-%d %H:%M:%S", "last_seen", "localtime"), client_id ' + \
+            'FROM messages ' + \
+            'ORDER BY {} {} LIMIT {}'
+            .format(
                 order[0],
                 order[1],
                 limit
