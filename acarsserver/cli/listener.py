@@ -50,8 +50,7 @@ while True:
         client = ClientInputMapper.map(ip)
         identical = ClientRepository(adapter).fetch_identical(client)
         if identical:
-            # @TODO move to mapper?
-            ClientRepository(adapter).update(identical)
+            ClientDbMapper(adapter).update(identical)
             client = identical
         else:
             ClientDbMapper(adapter).insert(client)
@@ -68,8 +67,7 @@ while True:
         msg = MessageInputMapper.map(data, aircraft, client)
         identical = MessageRepository(adapter).fetch_identical(msg)
         if identical:
-            # @TODO move to mapper?
-            MessageRepository(adapter).update(identical, client)
+            MessageDbMapper(adapter).update(identical, client)
             msg = identical
         else:
             MessageDbMapper(adapter).insert(msg, aircraft, client)

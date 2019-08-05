@@ -27,3 +27,13 @@ class ClientDbMapper:
             client = Client(result)
 
         return client
+
+    def update(self, client):
+        now = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+
+        self.adapter.execute(
+            'UPDATE clients SET last_seen = ? WHERE id = ?',
+            (now, client.id)
+        )
+
+        self.adapter.connection.commit()

@@ -2,7 +2,7 @@ import json
 import os
 from urllib import request
 
-from acarsserver.repository.aircraft import AircraftRepository
+from acarsserver.mapper.db.aircraft import AircraftDbMapper
 
 
 class ImageService:
@@ -21,7 +21,7 @@ class ImageService:
             url = ImageService.get_url(aircraft)
             if url:
                 filename = ImageService.download_image(url, aircraft)
-                AircraftRepository(self.adapter).update(aircraft, filename)
+                AircraftDbMapper(self.adapter).update(aircraft, filename)
                 print('Aircraft image downloaded.')
             else:
                 print('Aircraft image URL could not be fetched.')

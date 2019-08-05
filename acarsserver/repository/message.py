@@ -30,12 +30,3 @@ class MessageRepository():
             msg = Message(result, aircraft, client)
 
         return msg
-
-    def update(self, msg, client):
-        now = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-
-        self.adapter.execute(
-            'UPDATE messages SET last_seen = ?, client_id = ? WHERE id = ?',
-            (now, client.id, msg.id)
-        )
-        self.adapter.connection.commit()
