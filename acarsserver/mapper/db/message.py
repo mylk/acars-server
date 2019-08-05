@@ -50,7 +50,7 @@ class MessageDbMapper:
         return messages
 
     def update(self, msg, client):
-        now = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        now = datetime.strftime(datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
 
         self.adapter.execute(
             'UPDATE messages SET last_seen = ?, client_id = ? WHERE id = ?',

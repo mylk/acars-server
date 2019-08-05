@@ -29,7 +29,7 @@ class ClientDbMapper:
         return client
 
     def update(self, client):
-        now = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        now = datetime.strftime(datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
 
         self.adapter.execute(
             'UPDATE clients SET last_seen = ? WHERE id = ?',
