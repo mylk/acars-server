@@ -10,21 +10,23 @@ class ImageService:
     MEDIAWIKI_URL = 'https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers&' + \
         'gcmtitle=Category:{}_(aircraft)&gcmtype=file&redirects=1&prop=imageinfo&iiprop=url&format=json'
     adapter = None
+    logger = None
 
-    def __init__(self, adapter):
+    def __init__(self, adapter, logger):
         self.adapter = adapter
+        self.logger = logger
 
     def handle(self, aircraft):
         # fetch the aircraft image if missing
         if not ImageService.exists(aircraft):
-            print('Downloading {} aircraft image.'.format(aircraft.registration))
+            self.logger.info('Downloading {} aircraft image.'.format(aircraft.registration))
             url = ImageService.get_url(aircraft)
             if url:
                 filename = ImageService.download_image(url, aircraft)
                 AircraftDbMapper(self.adapter).update(aircraft, filename)
-                print('Aircraft image downloaded.')
+                self.logger.info('Aircraft image downloaded.')
             else:
-                print('Aircraft image URL could not be fetched.')
+                self.logger.warning('Aircraft image URL could not be fetched.')
 
     @staticmethod
     def exists(aircraft):

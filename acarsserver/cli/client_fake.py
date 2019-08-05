@@ -7,6 +7,7 @@ import sys
 import time
 
 from acarsserver.config import environment
+from acarsserver.service.logger import LoggerService
 
 HOST = environment.listener_host
 PORT = environment.listener_port
@@ -22,12 +23,14 @@ MESSAGES = [
     '  (null) 3 {} {} 0 -24 H .PH-BFH  H1 8 D95A KL0174 #DFB(POS-KLM174D -3719N02455E/150203 F400\r\nRMK/FUEL  29.8 M0.88)',
 ]
 
+logger = LoggerService().get_instance()
+
 # create dgram udp socket
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    print('Socket created.')
+    logger.info('Socket created.')
 except OSError as msg:
-    print('Failed to create socket. Error:' + msg)
+    logger.error('Failed to create socket. Error:' + msg)
     sys.exit()
 
 while True:
@@ -40,13 +43,13 @@ while True:
     try:
         sock.sendto(msg.encode(), (HOST, PORT))
 
-        print('Data sent.')
+        logger.info('Data sent.')
 
     except (KeyboardInterrupt, SystemExit):
-        print('Exiting gracefully.')
+        logger.warning('Exiting gracefully.')
         break
     except OSError as msg:
-        print('Error sending data: ' + msg)
+        logger.error('Error sending data: ' + msg)
         sys.exit()
 
     time.sleep(5)

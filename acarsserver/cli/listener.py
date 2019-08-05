@@ -15,26 +15,29 @@ from acarsserver.repository.aircraft import AircraftRepository
 from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
 from acarsserver.service.image import ImageService
+from acarsserver.service.logger import LoggerService
 
 HOST = '' # all available interfaces
 PORT = environment.listener_port
 
+logger = LoggerService().get_instance()
+
 # create udp socket
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    print('Socket created.')
+    logger.info('Socket created.')
 except OSError as msg:
-    print('Failed to create socket. Error:' + msg)
+    logger.error('Failed to create socket. Error:' + msg)
     sys.exit()
 
 # bind socket to local host and port
 try:
     sock.bind((HOST, PORT))
 except OSError as msg:
-    print('Bind failed. Error: ' + msg)
+    logger.error('Bind failed. Error: ' + msg)
     sys.exit()
 
-print('Socket bind complete.')
+logger.info('Socket bind complete.')
 
 adapter = SqliteAdapter.get_instance()
 
@@ -73,11 +76,11 @@ while True:
             MessageDbMapper(adapter).insert(msg, aircraft, client)
             msg = MessageRepository(adapter).fetch_identical(msg)
 
-        ImageService(adapter).handle(aircraft)
+        ImageService(adapter, logger).handle(aircraft)
 
-        print('Message from client {}:{}\n{}\n'.format(ip, port, str(msg)))
+        logger.info('Message from client {}:{}\n{}'.format(ip, port, str(msg)))
     except (KeyboardInterrupt, SystemExit):
-        print('Exiting gracefully.')
+        logger.warning('Exiting gracefully.')
         break
 
 adapter.connection.close()
