@@ -59,7 +59,7 @@ while True:
             ClientDbMapper(adapter).insert(client)
             client = ClientRepository(adapter).fetch_identical(client)
 
-        aircraft = AircraftInputMapper.map(data[9].strip('.'))
+        aircraft = AircraftInputMapper.map(data[10])
         identical = AircraftRepository(adapter).fetch_identical(aircraft)
         if identical:
             aircraft = identical

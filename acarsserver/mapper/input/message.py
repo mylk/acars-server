@@ -10,7 +10,7 @@ class MessageInputMapper:
     def map(data, aircraft, client):
         last_seen_str = '{} {}'.format(data[4], data[5])
 
-        flight = data[14]
+        flight = data[15]
         first_seen = datetime.strptime(last_seen_str, '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
         last_seen = datetime.strptime(last_seen_str, '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 
