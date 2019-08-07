@@ -15,5 +15,5 @@ db_echo = False
 
 # the host and port of the listener
 # that receives the data from the client
-listener_host = 'localhost'
+listener_host = 'listener'
 listener_port = 5555

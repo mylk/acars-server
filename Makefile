@@ -1,4 +1,4 @@
-sys_deps:
+deps_sys:
 ifeq (, $(shell which acarsdec 2> /dev/null))
 	$(error Please install acarsdec, first.)
 endif
@@ -13,16 +13,16 @@ deps_dev:
 	pip install -r requirements_dev.txt
 
 listener:
-	PYTHONPATH=. acarsserver/cli/listener.py
+	PYTHONPATH=. python acarsserver/cli/listener.py
 
-client: sys_deps
-	PYTHONPATH=. acarsserver/cli/client.py
+client:
+	PYTHONPATH=. python acarsserver/cli/client.py
 
 client_fake: clean
-	PYTHONPATH=. acarsserver/cli/client_fake.py
+	PYTHONPATH=. python acarsserver/cli/client_fake.py
 
 web:
-	./run.py
+	python run.py
 
 db_migrate:
 	yoyo apply

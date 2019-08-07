@@ -1,0 +1,50 @@
+version: "3.7"
+
+x-base: &base
+    environment:
+        - ENV=development
+        - TZ=Europe/Athens
+    networks:
+        - acarsserver_net
+    volumes:
+        - ./:/acars-server
+
+services:
+    client:
+        <<: *base
+        build:
+            context: ./
+            dockerfile: docker/client/Dockerfile
+            args:
+                - ENV=development
+        hostname: client
+        devices:
+            - "/dev/bus/usb:/dev/bus/usb"
+
+    listener:
+        <<: *base
+        build:
+            context: ./
+            dockerfile: docker/listener/Dockerfile
+            args:
+                - ENV=development
+        hostname: listener
+        ports:
+            - target: 5555
+              published: 5555
+              protocol: udp
+
+    web:
+        <<: *base
+        build:
+            context: ./
+            dockerfile: docker/web/Dockerfile
+            args:
+                - ENV=development
+        hostname: web
+        ports:
+            - "8080:8080"
+
+networks:
+    acarsserver_net:
+        driver: "bridge"

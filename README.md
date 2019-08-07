@@ -68,7 +68,7 @@ git clone https://github.com/mylk/acars-server
 Check if your system has the required system dependencies (acarsdec installed).
 
 ```
-make sys_deps
+make deps_sys
 ```
 
 Install python package dependencies:

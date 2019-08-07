@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    client:
+        restart: always
+        environment:
+            - ENV=production
+        build:
+            args:
+                - ENV=production
+
+    listener:
+        restart: always
+        environment:
+            - ENV=production
+        build:
+            args:
+                - ENV=production
+
+    web:
+        restart: always
+        environment:
+            - ENV=production
+        build:
+            args:
+                - ENV=production
