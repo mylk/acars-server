@@ -17,3 +17,5 @@ db_echo = False
 # that receives the data from the client
 listener_host = 'listener'
 listener_port = 5555
+
+queue_host = 'rabbitmq'

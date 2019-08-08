@@ -12,14 +12,17 @@ deps:
 deps_dev:
 	pip install -r requirements_dev.txt
 
-listener:
-	PYTHONPATH=. python acarsserver/cli/listener.py
-
 client:
 	PYTHONPATH=. python acarsserver/cli/client.py
 
 client_fake: clean
 	PYTHONPATH=. python acarsserver/cli/client_fake.py
+
+image_download:
+	PYTHONPATH=. python acarsserver/cli/image_download.py
+
+listener:
+	PYTHONPATH=. python acarsserver/cli/listener.py
 
 web:
 	python run.py

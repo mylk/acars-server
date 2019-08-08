@@ -8,6 +8,13 @@ services:
             args:
                 - ENV=development
 
+    image_downloader:
+        environment:
+            - ENV=development
+        build:
+            args:
+                - ENV=development
+
     listener:
         environment:
             - ENV=development

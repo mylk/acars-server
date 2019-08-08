@@ -15,3 +15,8 @@ class Aircraft:
             self.registration,
             self.image
         )
+
+    def __iter__(self):
+        yield 'id', self.id
+        yield 'registration', self.registration
+        yield'image', self.image

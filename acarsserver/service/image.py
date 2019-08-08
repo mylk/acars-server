@@ -28,6 +28,8 @@ class ImageService:
             else:
                 self.logger.warning('Aircraft image URL could not be fetched.')
 
+        self.logger.info('Aircraft {} image already exists.'.format(aircraft.registration))
+
     @staticmethod
     def exists(aircraft):
         if not aircraft.image:

@@ -17,3 +17,5 @@ db_echo = True
 # that receives the data from the client
 listener_host = 'localhost'
 listener_port = 5555
+
+queue_host = 'localhost'

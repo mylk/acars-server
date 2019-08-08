@@ -21,6 +21,16 @@ services:
         devices:
             - "/dev/bus/usb:/dev/bus/usb"
 
+    image_downloader:
+        <<: *base
+        build:
+            context: ./
+            dockerfile: docker/image_downloader/Dockerfile
+            args:
+                - ENV=development
+        depends_on: [rabbitmq]
+        hostname: image-downloader
+
     listener:
         <<: *base
         build:
@@ -28,6 +38,7 @@ services:
             dockerfile: docker/listener/Dockerfile
             args:
                 - ENV=development
+        depends_on: [rabbitmq]
         hostname: listener
         ports:
             - target: 5555
@@ -44,6 +55,12 @@ services:
         hostname: web
         ports:
             - "8080:8080"
+
+    rabbitmq:
+        image: rabbitmq:3
+        hostname: rabbitmq
+        networks:
+            - acarsserver_net
 
 networks:
     acarsserver_net:

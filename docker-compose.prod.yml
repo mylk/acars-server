@@ -9,6 +9,14 @@ services:
             args:
                 - ENV=production
 
+    image_downloader:
+        restart: always
+        environment:
+            - ENV=production
+        build:
+            args:
+                - ENV=production
+
     listener:
         restart: always
         environment:

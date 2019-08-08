@@ -11,4 +11,4 @@ RUN apk add make busybox-extras && \
         make deps_dev; \
     fi
 
-CMD ["/acars-server/docker/listener/start.sh"]
+CMD ["/acars-server/docker/image_downloader/start.sh"]

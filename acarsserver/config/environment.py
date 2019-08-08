@@ -1,7 +1,5 @@
 import os
 
-from acarsserver.config import settings
-
 environment = os.environ.get('ENV')
 
 if environment == 'production':
@@ -20,3 +18,4 @@ db_url = env.db_url
 db_echo = env.db_echo
 listener_host = env.listener_host
 listener_port = env.listener_port
+queue_host = env.queue_host

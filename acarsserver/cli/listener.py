@@ -16,6 +16,7 @@ from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
 from acarsserver.service.image import ImageService
 from acarsserver.service.logger import LoggerService
+from acarsserver.service.rabbitmq import RabbitMQService
 
 HOST = '' # all available interfaces
 PORT = environment.listener_port
@@ -76,7 +77,7 @@ while True:
             MessageDbMapper(adapter).insert(msg, aircraft, client)
             msg = MessageRepository(adapter).fetch_identical(msg)
 
-        ImageService(adapter, logger).handle(aircraft)
+        RabbitMQService(logger).publish(aircraft)
 
         logger.info('Message from client {}:{}\n{}'.format(ip, port, str(msg)))
     except (KeyboardInterrupt, SystemExit):
