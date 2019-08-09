@@ -14,7 +14,7 @@ from acarsserver.mapper.input.message import MessageInputMapper
 from acarsserver.repository.aircraft import AircraftRepository
 from acarsserver.repository.client import ClientRepository
 from acarsserver.repository.message import MessageRepository
-from acarsserver.service.image import ImageService
+from acarsserver.service.input_normalizer import InputNormalizerService
 from acarsserver.service.logger import LoggerService
 from acarsserver.service.rabbitmq import RabbitMQService
 
@@ -46,7 +46,7 @@ while True:
     try:
         # receive data from client
         request = sock.recvfrom(1024)
-        data = request[0].decode().split(' ')
+        data = InputNormalizerService.normalize(request[0].decode()).split(' ')
         address = request[1]
         ip = address[0]
         port = address[1]
