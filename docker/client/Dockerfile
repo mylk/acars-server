@@ -43,4 +43,4 @@ RUN apk add git cmake make gcc musl-dev libusb libusb-dev && \
         make deps_dev; \
     fi
 
-CMD ["make", "client"]
+CMD ["/acars-server/docker/client/start.sh"]
