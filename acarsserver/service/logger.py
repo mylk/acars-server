@@ -2,6 +2,8 @@ import logging
 from logging import handlers
 from sys import stdout
 
+from acarsserver.config import environment
+
 LOGGING_PATH = "acarsserver/log/app.log"
 
 
@@ -9,7 +11,7 @@ class LoggerService:
 
     def __init__(self):
         self.logger = logging.getLogger()
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(environment.logging_level)
 
         rotate_handler = handlers.TimedRotatingFileHandler(
             filename=LOGGING_PATH,

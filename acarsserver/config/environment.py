@@ -16,6 +16,7 @@ debug = env.debug
 reloader = env.reloader
 db_url = env.db_url
 db_echo = env.db_echo
+logging_level = env.logging_level
 listener_host = env.listener_host
 listener_port = env.listener_port
 queue_host = env.queue_host

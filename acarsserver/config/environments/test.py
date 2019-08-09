@@ -1,3 +1,5 @@
+import logging
+
 # server backend
 server = 'wsgiref'
 
@@ -12,6 +14,8 @@ db_url = 'sqlite:///:memory:'
 
 # echo database engine messages
 db_echo = False
+
+logging_level = logging.DEBUG
 
 # the host and port of the listener
 # that receives the data from the client

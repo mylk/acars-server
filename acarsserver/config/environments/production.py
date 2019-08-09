@@ -1,3 +1,5 @@
+import logging
+
 # server backend
 server = 'cherrypy'
 
@@ -12,6 +14,8 @@ db_url = 'sqlite:///acarsserver/db/db.sqlite3'
 
 # echo database engine messages
 db_echo = False
+
+logging_level = logging.INFO
 
 # the host and port of the listener
 # that receives the data from the client
