@@ -10,7 +10,7 @@ class Aircraft:
         self.image = result[2]
 
     def __str__(self):
-        return 'ID: {}, Registration:{}, Image: {}'.format(
+        return 'ID: {}, Registration: {}, Image: {}'.format(
             self.id,
             self.registration,
             self.image
@@ -19,4 +19,4 @@ class Aircraft:
     def __iter__(self):
         yield 'id', self.id
         yield 'registration', self.registration
-        yield'image', self.image
+        yield 'image', self.image

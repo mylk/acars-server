@@ -18,72 +18,82 @@ from acarsserver.service.input_normalizer import InputNormalizerService
 from acarsserver.service.logger import LoggerService
 from acarsserver.service.rabbitmq import RabbitMQService
 
-HOST = '' # all available interfaces
-PORT = environment.listener_port
 
-logger = LoggerService().get_instance()
+class Listener:
 
-# create udp socket
-try:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    logger.info('Socket created.')
-except OSError as msg:
-    logger.error('Failed to create socket. Error:' + msg)
-    sys.exit()
+    HOST = '' # all available interfaces
+    PORT = environment.listener_port
+    adapter = None
+    logger = None
 
-# bind socket to local host and port
-try:
-    sock.bind((HOST, PORT))
-except OSError as msg:
-    logger.error('Bind failed. Error: ' + msg)
-    sys.exit()
+    def __init__(self):
+        self.adapter = SqliteAdapter.get_instance()
+        self.logger = LoggerService().get_instance()
 
-logger.info('Socket bind complete.')
+    def handle(self):
+        # create udp socket
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.logger.info('Socket created.')
+        except OSError as msg:
+            self.logger.error('Failed to create socket. Error:' + str(msg))
+            sys.exit()
 
-adapter = SqliteAdapter.get_instance()
+        # bind socket to local host and port
+        try:
+            sock.bind((self.HOST, self.PORT))
+        except OSError as msg:
+            self.logger.error('Bind failed. Error: ' + str(msg))
+            sys.exit()
 
-while True:
-    try:
-        # receive data from client
-        request = sock.recvfrom(1024)
-        data = InputNormalizerService.normalize(request[0].decode()).split(' ')
-        address = request[1]
-        ip = address[0]
-        port = address[1]
+        self.logger.info('Socket bind complete.')
 
-        client = ClientInputMapper.map(ip)
-        identical = ClientRepository(adapter).fetch_identical(client)
-        if identical:
-            ClientDbMapper(adapter).update(identical)
-            client = identical
-        else:
-            ClientDbMapper(adapter).insert(client)
-            client = ClientRepository(adapter).fetch_identical(client)
+        while True:
+            try:
+                # receive data from client
+                request = sock.recvfrom(1024)
+                data = InputNormalizerService.normalize(request[0].decode().split(' '))
+                address = request[1]
+                ip = address[0]
+                port = address[1]
 
-        aircraft = AircraftInputMapper.map(data[10])
-        identical = AircraftRepository(adapter).fetch_identical(aircraft)
-        if identical:
-            aircraft = identical
-        else:
-            AircraftDbMapper(adapter).insert(aircraft)
-            aircraft = AircraftRepository(adapter).fetch_identical(aircraft)
+                client = ClientInputMapper.map(ip)
+                identical = ClientRepository(self.adapter).fetch_identical(client)
+                if identical:
+                    ClientDbMapper(self.adapter).update(identical)
+                    client = identical
+                else:
+                    ClientDbMapper(self.adapter).insert(client)
+                    client = ClientRepository(self.adapter).fetch_identical(client)
 
-        msg = MessageInputMapper.map(data, aircraft, client)
-        identical = MessageRepository(adapter).fetch_identical(msg)
-        if identical:
-            MessageDbMapper(adapter).update(identical, client)
-            msg = identical
-        else:
-            MessageDbMapper(adapter).insert(msg, aircraft, client)
-            msg = MessageRepository(adapter).fetch_identical(msg)
+                aircraft = AircraftInputMapper.map(data[10])
+                identical = AircraftRepository(self.adapter).fetch_identical(aircraft)
+                if identical:
+                    aircraft = identical
+                else:
+                    AircraftDbMapper(self.adapter).insert(aircraft)
+                    aircraft = AircraftRepository(self.adapter).fetch_identical(aircraft)
 
-        RabbitMQService(logger).publish(aircraft)
+                msg = MessageInputMapper.map(data, aircraft, client)
+                identical = MessageRepository(self.adapter).fetch_identical(msg)
+                if identical:
+                    MessageDbMapper(self.adapter).update(identical, client)
+                    msg = identical
+                else:
+                    MessageDbMapper(self.adapter).insert(msg, aircraft, client)
+                    msg = MessageRepository(self.adapter).fetch_identical(msg)
 
-        logger.info('Message from client {}:{}\n{}'.format(ip, port, str(msg)))
-    except (KeyboardInterrupt, SystemExit):
-        logger.warning('Exiting gracefully.')
-        break
+                RabbitMQService(self.logger).publish(aircraft)
 
-adapter.connection.close()
+                self.logger.info('Message from client {}:{}\n{}'.format(ip, port, str(msg)))
+            except (KeyboardInterrupt, SystemExit):
+                self.logger.warning('Exiting gracefully.')
+                break
 
-sock.close()
+        self.adapter.connection.close()
+
+        sock.close()
+
+
+if __name__ == '__main__':
+    Listener().handle()

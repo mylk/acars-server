@@ -7,17 +7,27 @@ from acarsserver.config import environment
 from acarsserver.config import settings
 from acarsserver.service.logger import LoggerService
 
-HOST = environment.listener_host
-PORT = environment.listener_port
 
-logger = LoggerService().get_instance()
+class Client:
 
-try:
-    logger.info('Starting acarsdec.')
-    os.execlp('acarsdec', '-A', '-N', '{}:{}'.format(HOST, PORT), '-o0', '-r', '0', *settings.acars_frequencies)
-except OSError as msg:
-    logger.error('Failed to start acarsdec. Error:' + msg)
-    sys.exit()
-except (KeyboardInterrupt, SystemExit):
-    logger.warning('Exiting gracefully.')
-    sys.exit()
+    HOST = environment.listener_host
+    PORT = environment.listener_port
+    logger = None
+
+    def __init__(self):
+        self.logger = LoggerService().get_instance()
+
+    def handle(self):
+        try:
+            self.logger.info('Starting acarsdec.')
+            os.execlp('acarsdec', '-A', '-N', '{}:{}'.format(self.HOST, self.PORT), '-o0', '-r', '0', *settings.acars_frequencies)
+        except OSError as msg:
+            self.logger.error('Failed to start acarsdec. Error:' + str(msg))
+            sys.exit()
+        except (KeyboardInterrupt, SystemExit):
+            self.logger.warning('Exiting gracefully.')
+            sys.exit()
+
+
+if __name__ == '__main__':
+    Client().handle()
