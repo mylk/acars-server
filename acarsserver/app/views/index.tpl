@@ -27,14 +27,26 @@
         </tr>
     % for msg in messages:
         <tr>
-            <td>{{ msg.aircraft.registration }}</td>
-            <td>{{ msg.flight }}</td>
-            <td>{{ msg.first_seen }}</td>
-            <td>{{ msg.last_seen }}</td>
-            <td>
-                <a href="/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
-                    <img src="/img/aircrafts/{{ msg.aircraft.image }}" height="120" /></li>
-                </a>
+            <td align="center">{{ msg.aircraft.registration }}</td>
+            <td align="center">{{ msg.flight }}</td>
+            <td align="center">{{ msg.first_seen }}</td>
+            <td align="center">{{ msg.last_seen }}</td>
+            <td align="center">
+                % if msg.aircraft.image:
+                    <a href="/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
+                        <img src="/img/aircrafts/{{ msg.aircraft.image }}" width="180" height="120" />
+                    </a>
+                % else:
+                    <img src="/img/aircrafts/paper_plane.png" width="180" height="120" />
+                % end
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <div class="txt">
+                    <a class="txt-title">Show latest text >></a>
+                    <div class="txt-msg fadeout">{{ msg.txt or "No text contained in message." }}</div>
+                </div>
             </td>
         </tr>
     % end
@@ -43,5 +55,7 @@
     % include('layouts/footer.tpl')
 
     </div>
+
+    <script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>

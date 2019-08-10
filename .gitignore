@@ -5,6 +5,7 @@
 *.swp
 acarsserver/log/*
 acarsserver/app/assets/img/aircrafts/*
+!acarsserver/app/assets/img/aircrafts/paper_plane.png
 !acarsserver/log/.gitkeep
 !acarsserver/app/assets/img/aircrafts/.gitkeep
 

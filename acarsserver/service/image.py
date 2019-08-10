@@ -26,7 +26,8 @@ class ImageService:
                 AircraftDbMapper(self.adapter).update(aircraft, filename)
                 self.logger.info('Aircraft image downloaded.')
             else:
-                self.logger.warning('Aircraft image URL could not be fetched.')
+                self.logger.warning('Aircraft {} image URL could not be fetched.'.format(aircraft.registration))
+            return
 
         self.logger.info('Aircraft {} image already exists.'.format(aircraft.registration))
 

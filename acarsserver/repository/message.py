@@ -14,7 +14,7 @@ class MessageRepository():
 
     def fetch_identical(self, msg):
         self.adapter.execute(
-            'SELECT id, aircraft_id, flight, first_seen, last_seen, client_id ' +
+            'SELECT id, aircraft_id, flight, txt, first_seen, last_seen, client_id ' +
             'FROM messages ' +
             'WHERE aircraft_id = ? ' +
             'AND flight = ? ' +
@@ -26,7 +26,7 @@ class MessageRepository():
         msg = None
         if result:
             aircraft = AircraftDbMapper(self.adapter).fetch(result[1])
-            client = ClientDbMapper(self.adapter).fetch(result[5])
+            client = ClientDbMapper(self.adapter).fetch(result[6])
             msg = Message(result, aircraft, client)
 
         return msg

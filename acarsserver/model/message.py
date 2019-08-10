@@ -6,6 +6,7 @@ class Message:
     id = None
     aircraft = None
     flight = None
+    txt = None
     first_seen = None
     last_seen = None
     client = None
@@ -14,8 +15,9 @@ class Message:
         self.id = result[0]
         self.aircraft = aircraft
         self.flight = result[2]
-        self.first_seen = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-        self.last_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
+        self.txt = result[3]
+        self.first_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
+        self.last_seen = datetime.strptime(result[5], '%Y-%m-%d %H:%M:%S')
         self.client = client
 
     def __str__(self):

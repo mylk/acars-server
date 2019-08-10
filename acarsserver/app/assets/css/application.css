@@ -1,3 +1,11 @@
+body {
+    font-size: 12px;
+}
+
+a {
+    color: black;
+}
+
 #is-online {
     color: white;
     text-align: center;
@@ -6,22 +14,46 @@
 
 #wrap {
     margin: auto;
-    width: 35%;
+    width: 55%;
 }
 
 table {
-    padding: 20px 0 0 0;
-}
-
-table td {
-    padding: 10px 20px;
+    padding: 20px 0 0 45px;
 }
 
 table td a {
     border: 0px;
 }
 
+.txt {
+    position: relative;
+    top: -8px;
+    left: 26px;
+}
+
+.txt-title {
+    display: block;
+    width: 130px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.fadein, .fadeout {
+    visibility: hidden;
+    -moz-transition: opacity 0.4s linear;
+    -o-transition: opacity 0.4s linear;
+    -webkit-transition: opacity 0.4s linear;
+    transition: opacity 0.4s linear;
+}
+
+.fadein {
+    visibility: visible;
+}
+
 #footer {
-    text-align: center;
-    padding-right: 20px;
+    padding-left: 100px;
+}
+
+#footer table {
+    width: 100%;
 }

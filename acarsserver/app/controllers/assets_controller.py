@@ -11,3 +11,6 @@ class AssetsController(ApplicationController):
 
     def css(filename):
         return static_file(filename, root='acarsserver/app/assets/css')
+
+    def js(filename):
+        return static_file(filename, root='acarsserver/app/assets/js')

@@ -14,8 +14,8 @@ class MessageDbMapper:
 
     def insert(self, msg, aircraft, client):
         self.adapter.execute(
-            'INSERT INTO messages (aircraft_id, flight, first_seen, last_seen, client_id) VALUES (?, ?, ?, ?, ?)',
-            (aircraft.id, msg.flight, msg.first_seen, msg.last_seen, client.id)
+            'INSERT INTO messages (aircraft_id, flight, txt, first_seen, last_seen, client_id) VALUES (?, ?, ?, ?, ?, ?)',
+            (aircraft.id, msg.flight, msg.txt, msg.first_seen, msg.last_seen, client.id)
         )
         self.adapter.connection.commit()
 
@@ -26,8 +26,10 @@ class MessageDbMapper:
 
         # the actual query
         self.adapter.execute(
-            'SELECT id, aircraft_id, flight, strftime("%Y-%m-%d %H:%M:%S", "first_seen", "localtime"), ' + \
-            'strftime("%Y-%m-%d %H:%M:%S", "last_seen", "localtime"), client_id ' + \
+            'SELECT id, aircraft_id, flight, txt, ' + \
+            'strftime("%Y-%m-%d %H:%M:%S", "first_seen", "localtime"), ' + \
+            'strftime("%Y-%m-%d %H:%M:%S", "last_seen", "localtime"), ' + \
+            'client_id ' + \
             'FROM messages ' + \
             'ORDER BY {} {} LIMIT {}'
             .format(
@@ -42,7 +44,7 @@ class MessageDbMapper:
         messages = []
         for result in results:
             aircraft = AircraftDbMapper(self.adapter).fetch(result[1])
-            client = ClientDbMapper(self.adapter).fetch(result[5])
+            client = ClientDbMapper(self.adapter).fetch(result[6])
             msg = Message(result, aircraft, client)
 
             messages.append(msg)
@@ -53,7 +55,7 @@ class MessageDbMapper:
         now = datetime.strftime(datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
 
         self.adapter.execute(
-            'UPDATE messages SET last_seen = ?, client_id = ? WHERE id = ?',
-            (now, client.id, msg.id)
+            'UPDATE messages SET txt = ?, last_seen = ?, client_id = ? WHERE id = ?',
+            (now, msg.txt, client.id, msg.id)
         )
         self.adapter.connection.commit()
