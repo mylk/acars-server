@@ -59,6 +59,8 @@ services:
     rabbitmq:
         image: rabbitmq:3
         hostname: rabbitmq
+        environment:
+            - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit log_levels [{connection,error}]
         networks:
             - acarsserver_net
 
