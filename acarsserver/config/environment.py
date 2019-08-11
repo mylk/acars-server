@@ -11,9 +11,9 @@ elif environment == 'test':
 else:
     raise RuntimeError('Environment not set or incorrect.')
 
-server = env.server
-debug = env.debug
-reloader = env.reloader
+web_server = env.web_server
+web_debug = env.web_debug
+web_reloader = env.web_reloader
 web_root_path = env.web_root_path
 db_url = env.db_url
 db_echo = env.db_echo

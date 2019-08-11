@@ -1,11 +1,11 @@
 import logging
 
 # server backend
-server = 'cherrypy'
+web_server = 'cherrypy'
 # debug error messages
-debug = False
+web_debug = False
 # auto-reload
-reloader = False
+web_reloader = False
 web_root_path = '/acars-server'
 
 # database url
@@ -17,7 +17,7 @@ logging_level = logging.INFO
 
 # the host and port of the listener
 # that receives the data from the client
-listener_host = 'listener'
+listener_host = 'mylk.wtf'
 listener_port = 5555
 
 queue_host = 'rabbitmq'

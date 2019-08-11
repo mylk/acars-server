@@ -1,11 +1,11 @@
 import logging
 
 # server backend
-server = 'cherrypy'
+web_server = 'cherrypy'
 # debug error messages
-debug = True
+web_debug = True
 # auto-reload
-reloader = True
+web_reloader = True
 web_root_path = ''
 
 # database url

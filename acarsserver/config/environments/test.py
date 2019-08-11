@@ -1,11 +1,11 @@
 import logging
 
 # server backend
-server = 'wsgiref'
+web_server = 'wsgiref'
 # debug error messages
-debug = True
+web_debug = True
 # auto-reload
-reloader = False
+web_reloader = False
 web_root_path = ''
 
 # database url

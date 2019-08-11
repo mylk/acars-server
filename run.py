@@ -15,41 +15,34 @@ def main():
 
     info(
         '\nApplication settings:\n'
-        'server = %s\n'
-        'host = %s\n'
-        'port = %s\n'
+        'web_server = %s\n'
+        'web_host = %s\n'
+        'web_port = %s\n'
+        'web_reloader = %s\n'
+        'web_debug = %s\n'
         'web_root_path = %s\n'
         'db_url = %s\n'
-        'db_echo = %s\n'
-        'reloader = %s\n'
-        'debug = %s\n',
-        environment.server,
+        'db_echo = %s\n',
+        environment.web_server,
         settings.web_host,
         settings.web_port,
+        environment.web_reloader,
+        environment.web_debug,
         environment.web_root_path,
         environment.db_url,
-        environment.db_echo,
-        environment.reloader,
-        environment.debug
+        environment.db_echo
     )
 
     acarsserver = AcarsServer(
-        server=environment.server,
-        host=settings.web_host,
-        port=settings.web_port,
-        db_url=environment.db_url,
-        db_echo=environment.db_echo,
-        reloader=environment.reloader,
-        debug=environment.debug,
-        web_root_path=environment.web_root_path
+        environment.web_debug
     )
 
     bottle.run(
         acarsserver.app,
-        server=acarsserver.server_type,
-        reloader=acarsserver.reloader,
-        host=acarsserver.host,
-        port=acarsserver.port
+        server=environment.web_server,
+        reloader=environment.web_reloader,
+        host=settings.web_host,
+        port=settings.web_port
     )
 
 

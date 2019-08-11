@@ -9,14 +9,7 @@ class AcarsServer:
 
     template_path = './acarsserver/app/views/'
 
-    def __init__(self, server, host, port, db_url, db_echo, reloader, debug, web_root_path):
-        self.server_type = server
-        self.host = host
-        self.port = port
-        self.reloader = reloader
-        self.debug = debug
-        self.web_root_path = web_root_path
-
+    def __init__(self, web_debug):
         self.app = bottle.Bottle()
 
         routes.setup_routing(self.app)
@@ -28,4 +21,4 @@ class AcarsServer:
         if './views' in bottle.TEMPLATE_PATH:
             bottle.TEMPLATE_PATH.remove('./views')
 
-        bottle.debug(self.debug)
+        bottle.debug(web_debug)
