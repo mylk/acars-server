@@ -6,7 +6,7 @@ A python3 implementation of an ACARS server, storing and displaying ACARS messag
 
 This is a real deployment of the application, displaying reatime data as received by my station at home (Palaio Falioro, Athens, Greece).
 
-[TBD](#)
+Visit [mylk.wtf/acars-server](http://mylk.wtf/acars-server).
 
 The setup is, an `acars-server` "client" running on my home computer (may not be always online) connected with the required equipment (described below) that decodes the ACARS messages and sends them to a remote `acars-server` "listener" that parses and stores them in order to be displayed on the web interface.
 
@@ -159,7 +159,6 @@ ENV=development make client_fake
 
 - [acarsdec](https://github.com/TLeconte/acarsdec) - The utility that decodes the ACARS messages and sends them to the `acars-server`.
 - [bottle](https://bottlepy.org/docs/dev/) - The python web framework used to create the web component.
-
 
 ## Versioning
 

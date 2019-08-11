@@ -38,6 +38,11 @@ table td a {
     cursor: pointer;
 }
 
+.txt-msg {
+    width: 90%;
+    word-wrap: anywhere;
+}
+
 .fadein, .fadeout {
     visibility: hidden;
     -moz-transition: opacity 0.4s linear;

@@ -56,6 +56,6 @@ class MessageDbMapper:
 
         self.adapter.execute(
             'UPDATE messages SET txt = ?, last_seen = ?, client_id = ? WHERE id = ?',
-            (now, msg.txt, client.id, msg.id)
+            (msg.txt, now, client.id, msg.id)
         )
         self.adapter.connection.commit()
