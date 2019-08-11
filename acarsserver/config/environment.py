@@ -14,6 +14,7 @@ else:
 server = env.server
 debug = env.debug
 reloader = env.reloader
+web_root_path = env.web_root_path
 db_url = env.db_url
 db_echo = env.db_echo
 logging_level = env.logging_level

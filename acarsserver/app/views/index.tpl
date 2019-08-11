@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="10">
     <title>ACARS server</title>
-    <link href="/css/application.css" rel="stylesheet" type="text/css">
+    <link href="{{ root_path }}/css/application.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -33,11 +33,11 @@
             <td align="center">{{ msg.last_seen }}</td>
             <td align="center">
                 % if msg.aircraft.image:
-                    <a href="/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
-                        <img src="/img/aircrafts/{{ msg.aircraft.image }}" width="180" height="120" />
+                    <a href="{{ root_path }}/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
+                        <img src="{{ root_path }}/img/aircrafts/{{ msg.aircraft.image }}" width="180" height="120" />
                     </a>
                 % else:
-                    <img src="/img/aircrafts/paper_plane.png" width="180" height="120" />
+                    <img src="{{ root_path }}/img/aircrafts/paper_plane.png" width="180" height="120" />
                 % end
             </td>
         </tr>
@@ -56,6 +56,6 @@
 
     </div>
 
-    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="{{ root_path }}/js/index.js"></script>
 </body>
 </html>

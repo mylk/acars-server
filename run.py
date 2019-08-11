@@ -18,6 +18,7 @@ def main():
         'server = %s\n'
         'host = %s\n'
         'port = %s\n'
+        'web_root_path = %s\n'
         'db_url = %s\n'
         'db_echo = %s\n'
         'reloader = %s\n'
@@ -25,6 +26,7 @@ def main():
         environment.server,
         settings.web_host,
         settings.web_port,
+        environment.web_root_path,
         environment.db_url,
         environment.db_echo,
         environment.reloader,
@@ -38,7 +40,8 @@ def main():
         db_url=environment.db_url,
         db_echo=environment.db_echo,
         reloader=environment.reloader,
-        debug=environment.debug
+        debug=environment.debug,
+        web_root_path=environment.web_root_path
     )
 
     bottle.run(

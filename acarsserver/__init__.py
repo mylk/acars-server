@@ -9,12 +9,13 @@ class AcarsServer:
 
     template_path = './acarsserver/app/views/'
 
-    def __init__(self, server, host, port, db_url, db_echo, reloader, debug):
+    def __init__(self, server, host, port, db_url, db_echo, reloader, debug, web_root_path):
         self.server_type = server
         self.host = host
         self.port = port
         self.reloader = reloader
         self.debug = debug
+        self.web_root_path = web_root_path
 
         self.app = bottle.Bottle()
 

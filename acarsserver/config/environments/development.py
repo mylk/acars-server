@@ -2,16 +2,14 @@ import logging
 
 # server backend
 server = 'cherrypy'
-
 # debug error messages
 debug = True
-
 # auto-reload
 reloader = True
+web_root_path = ''
 
 # database url
 db_url = 'sqlite:///acarsserver/db/db.sqlite3'
-
 # echo database engine messages
 db_echo = True
 
