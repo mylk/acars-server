@@ -7,7 +7,7 @@ def setup_routing(app):
     root_path = environment.web_root_path
 
     # static files
-    app.route('{}/img/<path>/<filename>'.format(root_path), 'GET', AssetsController.img)
+    app.route('{}/img/<path:path>/<filename>'.format(root_path), 'GET', AssetsController.img)
     app.route('{}/css/<filename>'.format(root_path), 'GET', AssetsController.css)
     app.route('{}/js/<filename>'.format(root_path), 'GET', AssetsController.js)
 

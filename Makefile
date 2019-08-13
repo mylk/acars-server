@@ -12,6 +12,9 @@ deps:
 deps_dev:
 	pip install -r requirements_dev.txt
 
+deps_image_downloader:
+	pip install -r requirements_image_downloader.txt
+
 client:
 	PYTHONPATH=. python acarsserver/cli/client.py
 

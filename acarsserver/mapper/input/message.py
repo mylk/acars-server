@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from acarsserver.model.message import Message
-from acarsserver.service.image import ImageService
 
 
 class MessageInputMapper:

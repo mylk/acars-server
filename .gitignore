@@ -4,10 +4,12 @@
 *.pyc
 *.swp
 acarsserver/log/*
-acarsserver/app/assets/img/aircrafts/*
-!acarsserver/app/assets/img/aircrafts/paper_plane.png
 !acarsserver/log/.gitkeep
-!acarsserver/app/assets/img/aircrafts/.gitkeep
+acarsserver/app/assets/img/aircrafts/large/*
+!acarsserver/app/assets/img/aircrafts/large/.gitkeep
+acarsserver/app/assets/img/aircrafts/thumb/*
+!acarsserver/app/assets/img/aircrafts/thumb/.gitkeep
+!acarsserver/app/assets/img/aircrafts/thumb/paper_plane.png
 
 # files
 acarsserver/db/db.sqlite3

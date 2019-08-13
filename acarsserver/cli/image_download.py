@@ -44,7 +44,7 @@ class ImageDownload:
     def callback(self, channel, method, properties, body):
         try:
             body_dict = json.loads(body)
-            aircraft = Aircraft([body_dict['id'], body_dict['registration'], None])
+            aircraft = Aircraft([body_dict['id'], body_dict['registration'], body_dict['image']])
 
             ImageService(self.adapter, self.logger).handle(aircraft)
 

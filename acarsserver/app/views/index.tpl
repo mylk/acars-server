@@ -33,8 +33,8 @@
             <td align="center">{{ msg.last_seen }}</td>
             <td align="center">
                 % if msg.aircraft.image:
-                    <a href="{{ root_path }}/img/aircrafts/{{ msg.aircraft.image }}" target="_blank">
-                        <img src="{{ root_path }}/img/aircrafts/{{ msg.aircraft.image }}" width="180" height="120" />
+                    <a href="{{ root_path }}/img/aircrafts/large/{{ msg.aircraft.image }}" target="_blank">
+                        <img src="{{ root_path }}/img/aircrafts/thumb/{{ msg.aircraft.image }}" width="180" height="120" />
                     </a>
                 % else:
                     <img src="{{ root_path }}/img/aircrafts/paper_plane.png" width="180" height="120" />

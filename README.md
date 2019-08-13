@@ -82,6 +82,12 @@ Install python package dependencies:
 make deps
 ```
 
+Install the python packages used for image manipulation (optimizing aircraft images):
+
+```
+make deps_image_downloader
+```
+
 Create the database:
 
 ```
