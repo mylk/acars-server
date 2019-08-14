@@ -4,28 +4,24 @@ from datetime import datetime
 class Message:
 
     id = None
-    aircraft = None
+    aircraft_id = None
     flight = None
     txt = None
-    first_seen = None
-    last_seen = None
+    created_at = None
     client = None
 
-    def __init__(self, result, aircraft, client):
+    def __init__(self, result, client):
         self.id = result[0]
-        self.aircraft = aircraft
+        self.aircraft_id = result[1]
         self.flight = result[2]
         self.txt = result[3]
-        self.first_seen = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
-        self.last_seen = datetime.strptime(result[5], '%Y-%m-%d %H:%M:%S')
+        self.created_at = datetime.strptime(result[4], '%Y-%m-%d %H:%M:%S')
         self.client = client
 
     def __str__(self):
-        return 'ID: {}, Aircraft ID: {}, Flight: {}, First Seen: {}, Last Seen: {}, Client ID: {}'.format(
-            self.id,
-            self.aircraft.id,
+        return 'Aircraft ID: {}, Flight: {}, Created At: {}, Client ID: {}'.format(
+            self.aircraft_id,
             self.flight,
-            self.first_seen.strftime('%Y-%m-%d %H:%M:%S'),
-            self.last_seen.strftime('%Y-%m-%d %H:%M:%S'),
+            self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             self.client.id
         )

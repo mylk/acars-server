@@ -15,7 +15,7 @@
 
     <p>These aircrafts just passed above my head (Palaio Faliro, Athens, Greece):</p>
 
-    % include('layouts/is_online.tpl', messages=messages)
+    % include('layouts/is_online.tpl', messages=aircrafts[0].messages)
 
     <table>
         <tr>
@@ -25,16 +25,16 @@
             <th>Last Seen</th>
             <th>Aircraft Image</th>
         </tr>
-    % for msg in messages:
+    % for aircraft in aircrafts:
         <tr>
-            <td align="center">{{ msg.aircraft.registration }}</td>
-            <td align="center">{{ msg.flight }}</td>
-            <td align="center">{{ msg.first_seen }}</td>
-            <td align="center">{{ msg.last_seen }}</td>
+            <td align="center">{{ aircraft.registration }}</td>
+            <td align="center">{{ aircraft.messages[0].flight }}</td>
+            <td align="center">{{ aircraft.first_seen }}</td>
+            <td align="center">{{ aircraft.last_seen }}</td>
             <td align="center">
-                % if msg.aircraft.image:
-                    <a href="{{ root_path }}/img/aircrafts/large/{{ msg.aircraft.image }}" target="_blank">
-                        <img src="{{ root_path }}/img/aircrafts/thumb/{{ msg.aircraft.image }}" width="180" height="120" />
+                % if aircraft.image:
+                    <a href="{{ root_path }}/img/aircrafts/large/{{ aircraft.image }}" target="_blank">
+                        <img src="{{ root_path }}/img/aircrafts/thumb/{{ aircraft.image }}" width="180" height="120" />
                     </a>
                 % else:
                     <img src="{{ root_path }}/img/aircrafts/paper_plane.png" width="180" height="120" />
@@ -45,7 +45,7 @@
             <td colspan="5">
                 <div class="txt">
                     <a class="txt-title">Show latest text >></a>
-                    <div class="txt-msg fadeout">{{ msg.txt or "No text contained in message." }}</div>
+                    <div class="txt-msg fadeout">{{ aircraft.messages[0].txt or "No text contained in message." }}</div>
                 </div>
             </td>
         </tr>

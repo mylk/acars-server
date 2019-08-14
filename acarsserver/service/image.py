@@ -24,15 +24,15 @@ class ImageService:
             self.logger.info('Downloading "{}" aircraft image.'.format(aircraft.registration))
             url = ImageService.get_url(aircraft)
             if url:
-                filename = self.download_image(url, aircraft)
-                AircraftDbMapper(self.adapter).update(aircraft, filename)
+                aircraft.image = self.download_image(url, aircraft)
+                AircraftDbMapper(self.adapter).update(aircraft)
                 self.logger.info('Aircraft image downloaded.')
 
                 self.logger.info('Optimizing image.')
-                self.optimize(filename)
+                self.optimize(aircraft.image)
 
                 self.logger.info('Creating thumbnail.')
-                self.create_thumbnail(filename)
+                self.create_thumbnail(aircraft.image)
                 return
 
             self.logger.warning('Aircraft "{}" image URL could not be fetched.'.format(aircraft.registration))

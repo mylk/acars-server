@@ -9,7 +9,14 @@ class AircraftRepository:
         self.adapter = adapter
 
     def fetch_identical(self, aircraft):
-        self.adapter.execute('SELECT id, registration, image FROM aircrafts WHERE registration = ?', (aircraft.registration,))
+        self.adapter.execute(
+            """
+                SELECT id, registration, image, first_seen, last_seen
+                FROM aircrafts
+                WHERE registration = ?
+            """,
+            (aircraft.registration,)
+        )
         result = self.adapter.fetchone()
 
         aircraft = None

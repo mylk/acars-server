@@ -13,7 +13,6 @@ from acarsserver.mapper.input.client import ClientInputMapper
 from acarsserver.mapper.input.message import MessageInputMapper
 from acarsserver.repository.aircraft import AircraftRepository
 from acarsserver.repository.client import ClientRepository
-from acarsserver.repository.message import MessageRepository
 from acarsserver.service.input_normalizer import InputNormalizerService
 from acarsserver.service.logger import LoggerService
 from acarsserver.service.rabbitmq import RabbitMQService
@@ -66,22 +65,18 @@ class Listener:
                     ClientDbMapper(self.adapter).insert(client)
                     client = ClientRepository(self.adapter).fetch_identical(client)
 
-                aircraft = AircraftInputMapper.map(data[10])
+                aircraft = AircraftInputMapper.map(data)
                 identical = AircraftRepository(self.adapter).fetch_identical(aircraft)
                 if identical:
+                    identical.last_seen = aircraft.last_seen
+                    AircraftDbMapper(self.adapter).update(identical)
                     aircraft = identical
                 else:
                     AircraftDbMapper(self.adapter).insert(aircraft)
                     aircraft = AircraftRepository(self.adapter).fetch_identical(aircraft)
 
                 msg = MessageInputMapper.map(data, aircraft, client)
-                identical = MessageRepository(self.adapter).fetch_identical(msg)
-                if identical:
-                    MessageDbMapper(self.adapter).update(identical, client)
-                    msg = identical
-                else:
-                    MessageDbMapper(self.adapter).insert(msg, aircraft, client)
-                    msg = MessageRepository(self.adapter).fetch_identical(msg)
+                MessageDbMapper(self.adapter).insert(msg, aircraft, client)
 
                 RabbitMQService(self.logger).publish(aircraft)
 
