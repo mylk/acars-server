@@ -1,6 +1,7 @@
 #!/bin/sh
 
+make db_migrate
+
 ./docker/wait-for-rabbitmq.sh
 
-make db_migrate
 make listener
