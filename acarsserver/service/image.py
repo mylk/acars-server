@@ -2,7 +2,7 @@ import json
 import magic
 import os
 from PIL import Image
-from urllib import request
+from urllib import request, error
 
 from acarsserver.mapper.db.aircraft import AircraftDbMapper
 
@@ -50,7 +50,12 @@ class ImageService:
 
     @staticmethod
     def get_url(aircraft):
-        response = request.urlopen(ImageService.MEDIAWIKI_URL.format(aircraft.registration))
+        try:
+            response = request.urlopen(ImageService.MEDIAWIKI_URL.format(aircraft.registration))
+        except (error.HTTPError) as ex_get_url:
+            self.logger.error('Could not get image URL for "{}": {}'.format(aircraft.registration, str(ex_get_url)))
+            self.logger.info('URL called: {}'.format(ImageService.MEDIAWIKI_URL.format(aircraft.registration)))
+            return None
 
         data = json.loads(response.read().decode('utf-8'))
         if 'query' in data and 'pages' in data['query']:
@@ -66,7 +71,10 @@ class ImageService:
         filename = '{}.{}'.format(aircraft.registration.lower(), url.split('.')[-1:][0].lower())
         filepath = '{}/../app/assets/img/aircrafts/large/{}'.format(path, filename)
 
-        request.urlretrieve(url, filepath)
+        try:
+            request.urlretrieve(url, filepath)
+        except (OSError, error.URLError) as ex_retrieve:
+            self.logger.error('Could not download image for "{}": {}'.format(aircraft.registration, str(ex_retrieve)))
 
         return filename
 
