@@ -2,7 +2,7 @@ import bottle
 
 from acarsserver.config import routes
 
-__version__ = '0.11.1'
+__version__ = '0.11.2'
 
 
 class AcarsServer:

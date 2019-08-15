@@ -19,6 +19,7 @@ a {
 
 table {
     padding: 20px 0 0 45px;
+    width: 100%;
 }
 
 table td a {
