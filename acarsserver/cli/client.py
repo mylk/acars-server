@@ -18,9 +18,14 @@ class Client:
         self.logger = LoggerService().get_instance()
 
     def handle(self):
+        self.logger.info('Will send data to {}:{}'.format(self.HOST, self.PORT))
+
         try:
             self.logger.info('Starting acarsdec.')
-            os.execlp('acarsdec', '-A', '-N', '{}:{}'.format(self.HOST, self.PORT), '-o0', '-r', '0', *settings.acars_frequencies)
+            acarsdec_cmd = ('acarsdec', '-A', '-N', '{}:{}'.format(self.HOST, self.PORT), '-o0', '-r', '0', *settings.acars_frequencies)
+            self.logger.info('Executing: {}'.format(' '.join(acarsdec_cmd)))
+
+            os.execlp(*acarsdec_cmd)
         except OSError as msg:
             self.logger.error('Failed to start acarsdec. Error:' + str(msg))
             sys.exit()
