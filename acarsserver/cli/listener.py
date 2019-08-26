@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import json
 import socket
 import sys
 
@@ -13,6 +14,7 @@ from acarsserver.mapper.input.client import ClientInputMapper
 from acarsserver.mapper.input.message import MessageInputMapper
 from acarsserver.repository.aircraft import AircraftRepository
 from acarsserver.repository.client import ClientRepository
+from acarsserver.service.input_decoder import InputDecoderService
 from acarsserver.service.input_normalizer import InputNormalizerService
 from acarsserver.service.logger import LoggerService
 from acarsserver.service.rabbitmq import RabbitMQService
@@ -51,7 +53,8 @@ class Listener:
             try:
                 # receive data from client
                 request = sock.recvfrom(1024)
-                data = InputNormalizerService.normalize(request[0].decode().split(' '))
+                request_dict = json.loads(request[0].decode(), cls=InputDecoderService.get_decoder)
+                data = InputNormalizerService.normalize(request_dict)
                 address = request[1]
                 ip = address[0]
                 port = address[1]

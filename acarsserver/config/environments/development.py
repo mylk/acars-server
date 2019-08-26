@@ -20,4 +20,4 @@ logging_level = logging.DEBUG
 listener_host = 'listener'
 listener_port = 5555
 
-queue_host = 'localhost'
+queue_host = 'rabbitmq'

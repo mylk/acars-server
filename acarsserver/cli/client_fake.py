@@ -15,15 +15,15 @@ class ClientFake:
     HOST = environment.listener_host
     PORT = environment.listener_port
     MESSAGES = [
-        '  client 3 {} {} 0 -25 2  VP-BOA  Q0 0 S98A FV5786 ',
-        '  client 3 {} {} 0 -24 H  VP-BOA  Q0 1 S99A FV5786 ',
-        '  client 3 {} {} 0 -24 H  VP-BOA  16 2 M87A FV5786 143218,36000,1807, 267,N 38.027 E 24.548',
-        '  client 3 {} {} 1 -25 H  VP-BOA  SA 3 S01A FV5786 0EV143628V/',
-        '  client 3 {} {} 0 -26 H  EC-MIH K _d 1 S21A UX1302 ',
-        '  client 3 {} {} 0 -25 H  EC-MIH  83 4 M22A UX1302 LLBG,LEMD,071445, 37.14,  23.05,40000,256,- 70.9, 20200',
-        '  client 3 {} {} 0 -25 X  CEPL21  B9 1 L03A XA0001 /LTAI.TI2/024LTAIA5853',
-        '  client 3 {} {} 0 -23 X  CEPL21  B9 1 L03A XA0001 /LTAI.TI2/024LTAIA5853',
-        '  client 3 {} {} 0 -19 H   OKVEA \x15 H1 9 104P GS0943 #T1B CLIMB 1 B\r\n48044824062.0064.8079081051053084.8080.310310204.403.630730900\r\n094.9094.9090.0090.200000000.800.8000000001100110110404950950\r\n'
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-25,"error":0,"mode":"2","label":"Q0","block_id":"0","ack":false,"tail":"VP-BOA","flight":"FV5786","msgno":"S98A"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-24,"error":0,"mode":"2","label":"Q0","block_id":"1","ack":false,"tail":"VP-BOA","flight":"FV5786","msgno":"S99A"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-25,"error":0,"mode":"H","label":"16","block_id":"2","ack":false,"tail":"VP-BOA","flight":"FV5786","msgno":"M87A","text":"143218,36000,1807, 267,N 38.027 E 24.548"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-25,"error":0,"mode":"H","label":"SA","block_id":"3","ack":false,"tail":"VP-BOA","flight":"FV5786","msgno":"S01A","text":"0EV143628V/"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-26,"error":0,"mode":"H","label":"_d","block_id":"1","ack":false,"tail":"EC-MIH","flight":"UX1302","msgno":"S21A"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-25,"error":0,"mode":"H","label":"83","block_id":"4","ack":false,"tail":"EC-MIH","flight":"UX1302","msgno":"M22A","text":"LLBG,LEMD,071445, 37.14,  23.05,40000,256,- 70.9, 20200"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-25,"error":0,"mode":"X","label":"B9","block_id":"1","ack":false,"tail":"CEPL21","flight":"XA0001","msgno":"L03A","text":"/LTAI.TI2/024LTAIA5853"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-23,"error":0,"mode":"X","label":"B9","block_id":"1","ack":false,"tail":"CEPL21","flight":"XA0001","msgno":"L03A","text":"/LTAI.TI2/024LTAIA5853"}}',
+        '{{"timestamp":{},"station_id":"client","channel":2,"freq":131.725,"level":-19,"error":0,"mode":"H","label":"H1","block_id":"9","ack":false,"tail":"OKVEA","flight":"GS0943","msgno":"104P","text":"#T1B CLIMB 1 B\r\n48044824062.0064.8079081051053084.8080.310310204.403.630730900\r\n094.9094.9090.0090.200000000.800.8000000001100110110404950950\r\n"}}'
     ]
     logger = None
 
@@ -40,11 +40,8 @@ class ClientFake:
             sys.exit()
 
         while True:
-            now = datetime.utcnow()
-            current_date = datetime.strftime(now, '%d/%m/%Y')
-            current_time = datetime.strftime(now, '%H:%M:%S')
-
-            msg = random.choice(self.MESSAGES).format(current_date, current_time)
+            current_timestamp = datetime.strftime(datetime.utcnow(), '%s')
+            msg = random.choice(self.MESSAGES).format(current_timestamp)
 
             try:
                 sock.sendto(msg.encode(), (self.HOST, self.PORT))

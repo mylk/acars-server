@@ -22,7 +22,7 @@ class Client:
 
         try:
             self.logger.info('Starting acarsdec.')
-            acarsdec_cmd = ('acarsdec', '-A', '-N', '{}:{}'.format(self.HOST, self.PORT), '-o0', '-r', '0', *settings.acars_frequencies)
+            acarsdec_cmd = ('acarsdec', '-A', '-j', '{}:{}'.format(self.HOST, self.PORT), '-o0', '-r', '0', *settings.acars_frequencies)
             self.logger.info('Executing: {}'.format(' '.join(acarsdec_cmd)))
 
             os.execlp(*acarsdec_cmd)
