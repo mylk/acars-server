@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     client:
-        restart: always
+        restart: "no"
         environment:
             - ENV=production
         build:
