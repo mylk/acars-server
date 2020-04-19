@@ -58,7 +58,7 @@ If you wish to receive ACARS messages, there is required equipment, as they are 
 
 ### Prerequesites
 
-(acardec)[https://github.com/TLeconte/acarsdec] is required to be installed, if you wish to receive ACARS messages, as well as the required equipment described above. Python3 is also required to run this application.
+[acarsdec](https://github.com/TLeconte/acarsdec) is required to be installed, if you wish to receive ACARS messages, as well as the required equipment described above. Python3 is also required to run this application.
 
 ### Installing
 
