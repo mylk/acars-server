@@ -64,6 +64,18 @@ services:
         networks:
             - acarsserver_net
 
+    test:
+        <<: *base
+        build:
+            context: ./
+            dockerfile: docker/test/Dockerfile
+            args:
+                - HOST_USER_NAME=mylk
+                - HOST_USER_ID=1000
+                - HOST_GROUP_ID=1000
+        depends_on: [rabbitmq]
+        hostname: test
+
 networks:
     acarsserver_net:
         driver: "bridge"

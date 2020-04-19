@@ -18,4 +18,5 @@ acarsserver/db/db.sqlite3
 
 # folders
 __pycache__
+.idea
 .settings

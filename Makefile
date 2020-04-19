@@ -33,6 +33,9 @@ web:
 db_migrate:
 	yoyo apply
 
+test: clean
+	docker-compose run --rm test
+
 clean:
 	find . -name *.pyc -delete
 	find . -name __pycache__ -type d -delete
