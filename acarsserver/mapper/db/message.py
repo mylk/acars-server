@@ -16,7 +16,10 @@ class MessageDbMapper:
             'INSERT INTO messages (aircraft_id, flight, txt, created_at, client_id) VALUES (?, ?, ?, ?, ?)',
             (aircraft.id, msg.flight, msg.txt, msg.created_at, client.id)
         )
+
         self.adapter.connection.commit()
+
+        return self.adapter.lastrowid
 
     def fetch_by(self, column, value, order=None, limit=None):
         # default order and limit, if not set
@@ -48,3 +51,13 @@ class MessageDbMapper:
             messages.append(msg)
 
         return messages
+
+    def delete(self, message):
+        self.adapter.execute('DELETE FROM messages WHERE id = ?', (message.id,))
+
+        self.adapter.connection.commit()
+
+    def delete_all(self):
+        self.adapter.execute('DELETE FROM messages')
+
+        self.adapter.connection.commit()

@@ -18,8 +18,10 @@ class ClientDbMapper:
 
         self.adapter.connection.commit()
 
-    def fetch(self, id):
-        self.adapter.execute('SELECT id, ip, last_seen FROM clients WHERE id = ?', (id,))
+        return self.adapter.lastrowid
+
+    def fetch(self, client_id):
+        self.adapter.execute('SELECT id, ip, last_seen FROM clients WHERE id = ?', (client_id,))
         result = self.adapter.fetchone()
 
         client = None
@@ -32,8 +34,18 @@ class ClientDbMapper:
         now = datetime.strftime(datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
 
         self.adapter.execute(
-            'UPDATE clients SET last_seen = ? WHERE id = ?',
-            (now, client.id)
+            'UPDATE clients SET ip = ?, last_seen = ? WHERE id = ?',
+            (client.ip, now, client.id)
         )
+
+        self.adapter.connection.commit()
+
+    def delete(self, client):
+        self.adapter.execute('DELETE FROM clients WHERE id = ?', (client.id,))
+
+        self.adapter.connection.commit()
+
+    def delete_all(self):
+        self.adapter.execute('DELETE FROM clients')
 
         self.adapter.connection.commit()

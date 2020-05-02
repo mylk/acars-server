@@ -17,8 +17,13 @@ class AircraftDbMapper:
 
         self.adapter.connection.commit()
 
-    def fetch(self, id):
-        self.adapter.execute('SELECT id, registration, image, first_seen, last_seen FROM aircrafts WHERE id = ?', (id,))
+        return self.adapter.lastrowid
+
+    def fetch(self, aircraft_id):
+        self.adapter.execute(
+            'SELECT id, registration, image, first_seen, last_seen FROM aircrafts WHERE id = ?',
+            (aircraft_id,)
+        )
         result = self.adapter.fetchone()
 
         aircraft = None
@@ -63,5 +68,15 @@ class AircraftDbMapper:
             'UPDATE aircrafts SET image = ?, last_seen = ? WHERE id = ?',
             (aircraft.image, aircraft.last_seen, aircraft.id)
         )
+
+        self.adapter.connection.commit()
+
+    def delete(self, aircraft):
+        self.adapter.execute('DELETE FROM aircrafts WHERE id = ?', (aircraft.id,))
+
+        self.adapter.connection.commit()
+
+    def delete_all(self):
+        self.adapter.execute('DELETE FROM aircrafts')
 
         self.adapter.connection.commit()

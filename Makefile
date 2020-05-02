@@ -34,7 +34,8 @@ db_migrate:
 	yoyo apply
 
 test: clean
-	docker-compose run --rm test
+	docker-compose run --rm test ; \
+	docker-compose kill rabbitmq
 
 clean:
 	find . -name *.pyc -delete
