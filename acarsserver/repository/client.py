@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from acarsserver.model.client import Client
 
 
