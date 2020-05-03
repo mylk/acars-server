@@ -1,6 +1,4 @@
 from bottle import template
-import os
-import sqlite3
 
 from acarsserver.adapter.sqlite import SqliteAdapter
 from acarsserver.app.controllers.application_controller import ApplicationController
