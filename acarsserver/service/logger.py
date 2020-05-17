@@ -4,8 +4,6 @@ from sys import stdout
 
 from acarsserver.config import environment
 
-LOGGING_PATH = "acarsserver/log/app.log"
-
 
 class LoggerService:
 
@@ -14,16 +12,16 @@ class LoggerService:
         self.logger.setLevel(environment.logging_level)
 
         rotate_handler = handlers.TimedRotatingFileHandler(
-            filename=LOGGING_PATH,
+            filename=environment.logging_file,
             when="midnight"
         )
         rotate_handler.suffix = "%Y%m%d"
         rotate_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
         self.logger.addHandler(rotate_handler)
 
-        stoud_handler = logging.StreamHandler(stdout)
-        stoud_handler.setFormatter(logging.Formatter("%(asctime)s: %(levelname)s - %(message)s"))
-        self.logger.addHandler(stoud_handler)
+        stdout_handler = logging.StreamHandler(stdout)
+        stdout_handler.setFormatter(logging.Formatter("%(asctime)s: %(levelname)s - %(message)s"))
+        self.logger.addHandler(stdout_handler)
 
     def get_instance(self):
         return self.logger

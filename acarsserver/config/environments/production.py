@@ -14,6 +14,7 @@ db_url = 'sqlite:///acarsserver/db/db.sqlite3'
 db_echo = False
 
 logging_level = logging.INFO
+logging_file = "acarsserver/log/app.log"
 
 # the host and port of the listener
 # that receives the data from the client

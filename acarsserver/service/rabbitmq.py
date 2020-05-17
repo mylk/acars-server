@@ -24,8 +24,10 @@ class RabbitMQService:
         self.channel = None
 
     def publish(self, aircraft):
-        self.logger.info('Enqueuing the image downloading of the aircraft #{} named "{}"...'
-             .format(aircraft.id, aircraft.registration))
+        self.logger.info(
+            'Enqueuing the image downloading of the aircraft #{} named "{}"...'
+             .format(aircraft.id, aircraft.registration)
+        )
 
         body = json.dumps(dict(aircraft))
 
