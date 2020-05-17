@@ -22,7 +22,7 @@ class ImageService:
         # fetch the aircraft image if missing
         if not self.exists(aircraft):
             self.logger.info('Downloading "{}" aircraft image.'.format(aircraft.registration))
-            url = ImageService.get_url(aircraft)
+            url = self.get_url(aircraft)
             if url:
                 aircraft.image = self.download_image(url, aircraft)
                 AircraftDbMapper(self.adapter).update(aircraft)
@@ -48,11 +48,10 @@ class ImageService:
         path = os.path.dirname(os.path.realpath(__file__))
         return os.path.isfile('{}/../app/assets/img/aircrafts/large/{}'.format(path, aircraft.image))
 
-    @staticmethod
-    def get_url(aircraft):
+    def get_url(self, aircraft):
         try:
             response = request.urlopen(ImageService.MEDIAWIKI_URL.format(aircraft.registration))
-        except (error.HTTPError) as ex_get_url:
+        except error.HTTPError as ex_get_url:
             self.logger.error('Could not get image URL for "{}": {}'.format(aircraft.registration, str(ex_get_url)))
             self.logger.info('URL called: {}'.format(ImageService.MEDIAWIKI_URL.format(aircraft.registration)))
             return None
@@ -65,8 +64,7 @@ class ImageService:
 
         return None
 
-    @staticmethod
-    def download_image(url, aircraft):
+    def download_image(self, url, aircraft):
         path = os.path.dirname(os.path.realpath(__file__))
         filename = '{}.{}'.format(aircraft.registration.lower(), url.split('.')[-1:][0].lower())
         filepath = '{}/../app/assets/img/aircrafts/large/{}'.format(path, filename)
