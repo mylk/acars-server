@@ -13,7 +13,7 @@ RUN apk add git cmake make gcc musl-dev libusb libusb-dev && \
     cmake ../ && \
     make && \
     make install && \
-    cp /usr/local/lib64/libacars.so.1 /usr/local/lib/ && \
+    cp /usr/local/lib64/libacars-2.so.2 /usr/local/lib/ && \
     # install rtl-sdr
     cd /tmp/ && \
     git clone git://git.osmocom.org/rtl-sdr.git && \
@@ -23,6 +23,7 @@ RUN apk add git cmake make gcc musl-dev libusb libusb-dev && \
     cmake ../ && \
     make && \
     make install && \
+    cp /usr/local/lib64/librtlsdr.so.0 /usr/local/lib/ && \
     # install acarsdec
     cd /tmp/ && \
     git clone https://github.com/TLeconte/acarsdec.git && \
