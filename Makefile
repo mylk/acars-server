@@ -34,6 +34,7 @@ db_migrate:
 	yoyo apply
 
 test: clean
+	chmod 0777 acarsserver/log ; \
 	docker-compose run --rm test ; \
 	docker-compose kill rabbitmq
 

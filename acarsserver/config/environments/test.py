@@ -1,5 +1,7 @@
 import logging
 
+environment = 'test'
+
 # server backend
 web_server = 'wsgiref'
 # debug error messages

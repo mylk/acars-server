@@ -66,6 +66,9 @@ services:
 
     test:
         <<: *base
+        environment:
+            - ENV=test
+            - TZ=Europe/Athens
         build:
             context: ./
             dockerfile: docker/test/Dockerfile

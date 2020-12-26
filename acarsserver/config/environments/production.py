@@ -1,5 +1,7 @@
 import logging
 
+environment = 'production'
+
 # server backend
 web_server = 'cherrypy'
 # debug error messages

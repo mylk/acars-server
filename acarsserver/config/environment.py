@@ -8,8 +8,6 @@ elif environment == 'development':
     import acarsserver.config.environments.development as env
 elif environment == 'test':
     import acarsserver.config.environments.test as env
-else:
-    raise RuntimeError('Environment not set or incorrect.')
 
 web_server = env.web_server
 web_debug = env.web_debug
@@ -22,3 +20,4 @@ logging_file = env.logging_file
 listener_host = env.listener_host
 listener_port = env.listener_port
 queue_host = env.queue_host
+environment = env.environment
