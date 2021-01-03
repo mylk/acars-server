@@ -1,0 +1,37 @@
+{
+  "batchcomplete": "",
+  "continue": {
+    "gcmcontinue": "file|434f4e54494e454e54414c204149524c494e455320424f45494e47203736372d3430303b204e3639303539405a52483b31362e30372e32303130203538334250202834373939353836313631292e4a5047|26689259",
+    "continue": "gcmcontinue||"
+  },
+  "query": {
+    "pages": {
+      "26689252": {
+        "pageid": 26689252,
+        "ns": 6,
+        "title": "File:Continental Airlines Boeing 767-400; N69059@ZRH;16.07.2010 583bk (4799578145).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Continental_Airlines_Boeing_767-400%3B_N69059%40ZRH%3B16.07.2010_583bk_%284799578145%29.jpg",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Continental_Airlines_Boeing_767-400;_N69059@ZRH;16.07.2010_583bk_(4799578145).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=26689252"
+          }
+        ]
+      },
+      "26689253": {
+        "pageid": 26689253,
+        "ns": 6,
+        "title": "File:Continental Airlines Boeing 767-400; N69059@ZRH;16.07.2010 583bi (4799576103).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Continental_Airlines_Boeing_767-400%3B_N69059%40ZRH%3B16.07.2010_583bi_%284799576103%29.jpg",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Continental_Airlines_Boeing_767-400;_N69059@ZRH;16.07.2010_583bi_(4799576103).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=26689253"
+          }
+        ]
+      }
+    }
+  }
+}

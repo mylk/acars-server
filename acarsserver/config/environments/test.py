@@ -23,4 +23,4 @@ logging_file = "acarsserver/log/app.log"
 listener_host = 'localhost'
 listener_port = 5555
 
-queue_host = 'localhost'
+queue_host = 'rabbitmq'

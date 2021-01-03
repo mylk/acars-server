@@ -8,6 +8,9 @@ from acarsserver.config import environment
 class LoggerService:
 
     def __init__(self):
+        if environment.environment == 'test':
+            logging.disable(logging.CRITICAL)
+
         self.logger = logging.getLogger()
         self.logger.setLevel(environment.logging_level)
 

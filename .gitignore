@@ -7,6 +7,7 @@ acarsserver/log/*
 !acarsserver/log/.gitkeep
 acarsserver/app/assets/img/aircrafts/large/*
 !acarsserver/app/assets/img/aircrafts/large/.gitkeep
+!acarsserver/app/assets/img/aircrafts/large/paper_plane.png
 acarsserver/app/assets/img/aircrafts/thumb/*
 !acarsserver/app/assets/img/aircrafts/thumb/.gitkeep
 !acarsserver/app/assets/img/aircrafts/thumb/paper_plane.png

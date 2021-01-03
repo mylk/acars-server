@@ -71,23 +71,24 @@ class ImageService:
 
         try:
             request.urlretrieve(url, filepath)
+            return filename
         except (OSError, error.URLError) as ex_retrieve:
             self.logger.error('Could not download image for "{}": {}'.format(aircraft.registration, str(ex_retrieve)))
 
-        return filename
+        return None
 
     def create_thumbnail(self, filename):
         base_path = os.path.dirname(os.path.realpath(__file__))
         aircrafts_path = '{}/../app/assets/img/aircrafts/'.format(base_path)
 
-        format = self.get_image_format(filename)
-        if not format:
+        file_format = self.get_image_format(filename)
+        if not file_format:
             return False
 
         try:
             image = Image.open(aircrafts_path + 'large/' + filename)
             image.thumbnail((180, 120))
-            image.save(aircrafts_path + 'thumb/' + filename, format)
+            image.save(aircrafts_path + 'thumb/' + filename, file_format)
             self.logger.info('Thumbnail creation successful for "{}".'.format(filename))
             return True
         except (KeyError, IOError) as ex_save:
@@ -99,15 +100,15 @@ class ImageService:
         base_path = os.path.dirname(os.path.realpath(__file__))
         aircrafts_path = '{}/../app/assets/img/aircrafts/'.format(base_path)
 
-        format = self.get_image_format(filename)
-        if not format:
+        file_format = self.get_image_format(filename)
+        if not file_format:
             return False
 
         try:
             image = Image.open(aircrafts_path + 'large/' + filename)
             image.save(
                 aircrafts_path + 'large/' + filename,
-                format=format,
+                format=file_format,
                 progressive=True,
                 quality=95,
                 optimize=True
@@ -126,8 +127,8 @@ class ImageService:
         try:
             mime = magic.Magic(mime=True)
             mime_type = mime.from_file(aircrafts_path)
-        except (FileNotFoundError) as ex_mime:
-            self.logger.error('Could not get mime type for "{}": {}'.format(filename, str(ex_mime)))
+        except FileNotFoundError as ex_mime:
+            self.logger.error('Could not get mime type for "{}": {}'.format(aircrafts_path, str(ex_mime)))
             return None
 
         return mime_type.split('/')[1].upper()
