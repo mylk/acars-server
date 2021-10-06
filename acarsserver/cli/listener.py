@@ -22,7 +22,8 @@ from acarsserver.service.rabbitmq import RabbitMQService
 
 class Listener:
 
-    HOST = '' # all available interfaces
+    # all available interfaces
+    HOST = ''
     PORT = environment.listener_port
     adapter = None
     logger = None

@@ -62,7 +62,7 @@ If you wish to receive ACARS messages, there is required equipment, as they are 
 
 ### Installing
 
-The installation procedure depends wether you will run the application using Docker or not. Anyway, you have to clone this repository:
+The installation procedure depends whether you will run the application using Docker or not. Anyway, you have to clone this repository:
 
 ```
 git clone https://github.com/mylk/acars-server
